@@ -16,9 +16,9 @@ export const ThemeContext = createContext();
 export const useTheme = () => useContext(ThemeContext);
 
 const pageVariants = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] } },
-  exit: { opacity: 0, y: -10, transition: { duration: 0.25 } },
+  initial: { opacity: 0, y: 10 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] } },
+  exit: { opacity: 0, transition: { duration: 0.2 } },
 };
 
 function AnimatedRoutes() {
@@ -34,7 +34,6 @@ function AnimatedRoutes() {
           <Route path="/experience" element={<Experience />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
-        <Footer />
       </motion.div>
     </AnimatePresence>
   );
@@ -56,9 +55,10 @@ export default function App() {
   return (
     <ThemeContext.Provider value={{ dark, setDark }}>
       <Router>
-        <div className={`min-h-screen transition-colors duration-300 ${dark ? "dark bg-dark-900 text-gray-100" : "bg-white text-gray-900"}`}>
+        <div className={`min-h-screen transition-colors duration-500 ease-in-out ${dark ? "dark bg-dark-900 text-gray-100" : "bg-white text-gray-900"}`}>
           <Navbar />
           <AnimatedRoutes />
+          <Footer />
         </div>
       </Router>
     </ThemeContext.Provider>

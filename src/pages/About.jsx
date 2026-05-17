@@ -12,7 +12,7 @@ const containerVariants = {
 
 const itemVariants = {
   hidden: { opacity: 0, y: 25 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } },
 };
 
 export default function About() {
@@ -123,14 +123,19 @@ export default function About() {
               <div className="grid sm:grid-cols-2 gap-4">
                 {[
                   { title: "Architecture First", desc: "I design the system before writing a line of code. Good architecture saves thousands of hours later." },
-                  { title: "Performance Obsessed", desc: "Slow software is broken software. I optimize queries, cache aggressively, and measure everything." },
+                  { title: "Performance Obsessed", desc: "Slow software is broken software. I optimize queries and cache aggressively." },
                   { title: "Clean Code", desc: "I write code for the next developer — readable, tested, and well-documented." },
                   { title: "Ship & Iterate", desc: "Perfect is the enemy of done. I ship working software and improve based on real feedback." },
                 ].map((v) => (
-                  <div key={v.title} className="glass-card rounded-xl p-5 hover:border-brand-300 dark:hover:border-brand-700 transition-colors">
+                  <motion.div 
+                    key={v.title} 
+                    whileHover={{ y: -5, scale: 1.02 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                    className="glass-card rounded-xl p-5 hover:border-brand-300 dark:hover:border-brand-700 transition-colors"
+                  >
                     <h4 className="font-display font-semibold text-sm dark:text-white mb-2">{v.title}</h4>
                     <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">{v.desc}</p>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </motion.div>

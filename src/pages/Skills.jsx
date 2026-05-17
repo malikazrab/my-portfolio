@@ -21,11 +21,12 @@ function SkillBar({ name, level, note, delay = 0 }) {
       </div>
       <div className="h-2 rounded-full bg-gray-100 dark:bg-dark-600 overflow-hidden">
         <motion.div
-          initial={{ width: 0 }}
-          whileInView={{ width: `${level}%` }}
+          initial={{ scaleX: 0 }}
+          whileInView={{ scaleX: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 1, delay: delay + 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="h-full rounded-full brand-gradient relative"
+          transition={{ type: "spring", stiffness: 100, damping: 20, delay: delay + 0.2 }}
+          className="h-full rounded-full brand-gradient relative origin-left"
+          style={{ width: `${level}%` }}
         >
           <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-white dark:bg-dark-900 border-2 border-brand-500 opacity-0 group-hover:opacity-100 transition-opacity" />
         </motion.div>

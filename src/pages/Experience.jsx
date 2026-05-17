@@ -10,7 +10,7 @@ function ExperienceCard({ exp, index }) {
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
+      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: index * 0.15 }}
       className="relative"
     >
       {/* Timeline line */}
@@ -25,7 +25,10 @@ function ExperienceCard({ exp, index }) {
         </div>
 
         {/* Card */}
-        <div className="flex-1 glass-card rounded-2xl p-6 sm:p-8 hover:shadow-xl hover:shadow-brand-500/10 hover:-translate-y-0.5 transition-all duration-300 mb-8">
+        <motion.div 
+          whileHover={{ y: -5 }}
+          className="flex-1 glass-card rounded-2xl p-6 sm:p-8 hover:shadow-xl hover:shadow-brand-500/10 transition-all duration-300 mb-8"
+        >
           <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-5">
             <div>
               <h3 className="font-display font-extrabold text-xl dark:text-white mb-1">{exp.role}</h3>
@@ -67,7 +70,7 @@ function ExperienceCard({ exp, index }) {
               <span key={t} className="skill-pill">{t}</span>
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
     </motion.div>
   );

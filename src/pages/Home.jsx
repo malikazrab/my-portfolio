@@ -19,7 +19,7 @@ const containerVariants = {
 
 const itemVariants = {
   hidden: { opacity: 0, y: 30 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } },
 };
 
 export default function Home() {
@@ -30,8 +30,8 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center grid-pattern noise-bg pt-16">
         {/* Background orbs */}
-        <div className="absolute top-1/4 right-1/4 w-96 h-96 rounded-full bg-brand-400/10 blur-3xl animate-pulse2 pointer-events-none" />
-        <div className="absolute bottom-1/4 left-1/6 w-64 h-64 rounded-full bg-brand-600/8 blur-2xl animate-pulse2 pointer-events-none" style={{ animationDelay: "1.5s" }} />
+        <div className="absolute top-1/4 right-1/4 w-96 h-96 rounded-full bg-brand-400/10 blur-[60px] animate-pulse2 pointer-events-none will-change-[filter,transform]" style={{ transform: 'translateZ(0)', backfaceVisibility: 'hidden' }} />
+        <div className="absolute bottom-1/4 left-1/6 w-64 h-64 rounded-full bg-brand-600/8 blur-[40px] animate-pulse2 pointer-events-none will-change-[filter,transform]" style={{ animationDelay: "1.5s", transform: 'translateZ(0)', backfaceVisibility: 'hidden' }} />
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
           <motion.div
@@ -118,10 +118,11 @@ export default function Home() {
                         </div>
                         <div className="h-1.5 rounded-full bg-gray-200 dark:bg-dark-500 overflow-hidden">
                           <motion.div
-                            initial={{ width: 0 }}
-                            animate={{ width: `${s.pct}%` }}
-                            transition={{ duration: 1, delay: 0.8, ease: "easeOut" }}
-                            className="h-full rounded-full brand-gradient"
+                            initial={{ scaleX: 0 }}
+                            animate={{ scaleX: 1 }}
+                            transition={{ type: "spring", stiffness: 100, damping: 20, delay: 0.8 }}
+                            className="h-full rounded-full brand-gradient origin-left"
+                            style={{ width: `${s.pct}%` }}
                           />
                         </div>
                       </div>

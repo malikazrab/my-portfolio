@@ -19,7 +19,7 @@
   }
 
   body {
-    @apply font-body antialiased transition-colors duration-300;
+    @apply font-body antialiased transition-colors duration-500;
     @apply bg-white text-gray-900;
   }
 
@@ -47,15 +47,21 @@
 
 @layer components {
   .glass {
-    backdrop-filter: blur(16px) saturate(180%);
-    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    backdrop-filter: blur(10px) saturate(150%);
+    -webkit-backdrop-filter: blur(10px) saturate(150%);
     @apply bg-white/80 dark:bg-dark-800/80 border border-white/20 dark:border-white/10;
+    @apply transition-all duration-500;
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
 
   .glass-card {
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
     @apply bg-white/60 dark:bg-dark-700/60 border border-gray-200/50 dark:border-white/10;
+    @apply transition-all duration-500;
+    will-change: transform, opacity;
+    transform: translateZ(0);
   }
 
   .brand-gradient {
