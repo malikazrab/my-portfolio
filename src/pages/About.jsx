@@ -145,8 +145,8 @@ export default function About() {
                     <BookOpen size={16} />
                   </div>
                   <div>
-                    <h4 className="font-display font-bold dark:text-white">Bachelor of Computer Science</h4>
-                    <p className="text-sm text-brand-500 font-mono">University • 2018</p>
+                    <h4 className="font-display font-bold dark:text-white">Bachelor of Software Engineering</h4>
+                    <p className="text-sm text-brand-500 font-mono">University of Engineering and Technology • 2025 - 2029</p>
                     <p className="text-sm text-gray-500 dark:text-gray-400 mt-1 leading-relaxed">
                       Core fundamentals in algorithms, data structures, databases, and software engineering that continue to inform my work daily.
                     </p>
