@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import SectionHeader from "../components/SectionHeader";
 import { skills } from "../data/portfolio";

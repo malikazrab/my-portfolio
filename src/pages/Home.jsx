@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Github, Mail, Phone, Download, Sparkles, Code2, Database, Smartphone } from "lucide-react";
-import { personal, skills, projects } from "../data/portfolio";
+import { ArrowRight, Github, Mail, Phone, Sparkles, Code2, Database, Smartphone } from "lucide-react";
+import { personal, projects } from "../data/portfolio";
 import ProjectCard from "../components/ProjectCard";
 
 const floatVariants = {
@@ -81,12 +81,12 @@ export default function Home() {
                 <a href={`mailto:${personal.email}`}
                   className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-brand-500 dark:hover:text-brand-400 transition-colors">
                   <Mail size={15} />
-                  malikazrab2007@gmail.com
+                  {personal.email}
                 </a>
-                <a href={`tel:+923242349720`}
+                <a href={`tel:${personal.phone.replace(/[^+\d]/g, "")}`}
                   className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 hover:text-brand-500 dark:hover:text-brand-400 transition-colors">
                   <Phone size={15} />
-                  +92 (324) 2349720
+                  {personal.phone}
                 </a>
               </motion.div>
             </div>

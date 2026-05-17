@@ -51,7 +51,7 @@ export default function About() {
                   className="w-10 h-10 rounded-xl glass flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-brand-500 hover:border-brand-400 transition-all duration-200">
                   <Mail size={16} />
                 </a>
-                <a href={`tel:+923242349720`}
+                <a href={`tel:${personal.phone.replace(/[^+\d]/g, "")}`}
                   className="w-10 h-10 rounded-xl glass flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-brand-500 hover:border-brand-400 transition-all duration-200">
                   <Phone size={16} />
                 </a>

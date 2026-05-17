@@ -86,7 +86,7 @@ export default function Contact() {
               icon={<Phone size={16} />}
               label="Phone"
               value={personal.phone}
-              href={`tel:+923242349720`}
+              href={`tel:${personal.phone.replace(/[^+\d]/g, "")}`}
             />
             <ContactCard
               icon={<Github size={16} />}

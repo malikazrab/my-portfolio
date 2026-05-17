@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Moon, Sun, Menu, X, Code2, Terminal } from "lucide-react";
 import { useTheme } from "../App";
+import { personal } from "../data/portfolio";
 
 const navLinks = [
   { to: "/", label: "Home" },
@@ -192,7 +193,7 @@ export default function Navbar() {
 
                 <div className="mt-auto pt-6 border-t border-gray-200 dark:border-white/10">
                   <p className="text-xs font-mono text-gray-400 dark:text-gray-600 text-center">
-                    malikazrab2007@gmail.com
+                    {personal.email}
                   </p>
                 </div>
               </div>
