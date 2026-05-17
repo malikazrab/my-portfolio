@@ -14,7 +14,7 @@ export const personal = {
 export const projects = [
   {
     id: 1,
-    title: "E-Commerce Platform",
+    title: "CMS Portal",
     description: "Multi-vendor marketplace with real-time inventory management, Stripe payments, and a Laravel backend serving a React storefront. Handles 10k+ daily transactions.",
     emoji: "🛒",
     tags: ["Laravel", "React", "MySQL", "Redis", "Stripe"],
@@ -30,7 +30,7 @@ export const projects = [
   },
   {
     id: 2,
-    title: "Healthcare Management System",
+    title: "BMW Motorsport Site",
     description: "Patient records, appointment scheduling, prescription management, and billing — all in one Laravel-powered platform with role-based access control.",
     emoji: "🏥",
     tags: ["Laravel", "PHP", "MySQL", "React"],
@@ -46,7 +46,7 @@ export const projects = [
   },
   {
     id: 3,
-    title: "Delivery Tracking App",
+    title: "E-Commerce Platform",
     description: "Cross-platform React Native mobile app with live GPS tracking, push notifications, driver assignments, and a Laravel REST API backend.",
     emoji: "📦",
     tags: ["React Native", "Laravel", "MySQL", "Redis"],
@@ -61,7 +61,7 @@ export const projects = [
   },
   {
     id: 4,
-    title: "SaaS Analytics Dashboard",
+    title: "Job Analytics Dashboard",
     description: "Next.js dashboard with server-side rendering, complex data visualizations, user team management, and subscription billing via Stripe.",
     emoji: "📊",
     tags: ["Next.js", "React", "Laravel", "PostgreSQL"],
@@ -156,8 +156,8 @@ export const skills = {
 export const experience = [
   {
     role: "Senior Full Stack Developer",
-    company: "TechForge Solutions",
-    period: "2022 – Present",
+    company: "SSRL UET Lab",
+    period: "2025 – Present",
     type: "Full-time",
     description: "Lead backend architect for a suite of SaaS products. Designed and built Laravel microservices handling 50K+ daily requests. Mentored junior developers and established code review standards.",
     highlights: [
@@ -170,8 +170,8 @@ export const experience = [
   },
   {
     role: "Full Stack Developer",
-    company: "DigitalCraft Agency",
-    period: "2020 – 2022",
+    company: "Tech Vezoto",
+    period: "2024 – 2025",
     type: "Full-time",
     description: "Built custom web applications for 15+ clients across e-commerce, healthcare, and real estate verticals. Delivered projects end-to-end from system design to deployment.",
     highlights: [
@@ -183,9 +183,9 @@ export const experience = [
     tech: ["Laravel", "React", "Next.js", "MySQL", "Stripe"],
   },
   {
-    role: "PHP Developer",
+    role: "Laravel Developer",
     company: "Freelance",
-    period: "2018 – 2020",
+    period: "2023 – 2024",
     type: "Freelance",
     description: "Delivered Laravel-based web applications and APIs for local businesses. Built custom CMS solutions and REST APIs for mobile app clients.",
     highlights: [
