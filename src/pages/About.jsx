@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { MapPin, Mail, Phone, Github, ArrowRight, Heart, Coffee, Code2, BookOpen } from "lucide-react";
+import { MapPin, Mail, Phone, Github, ArrowRight, Coffee, Code2, BookOpen } from "lucide-react";
 import SectionHeader from "../components/SectionHeader";
 import { personal } from "../data/portfolio";
 

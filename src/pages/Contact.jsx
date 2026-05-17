@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Mail, Phone, Github, MapPin, Send, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
+import { Mail, Phone, Github, MapPin, Send, CheckCircle2, Loader2 } from "lucide-react";
 import SectionHeader from "../components/SectionHeader";
 import { personal } from "../data/portfolio";
 

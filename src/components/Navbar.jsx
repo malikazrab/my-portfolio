@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Moon, Sun, Menu, X, Code2, Terminal } from "lucide-react";
+import { Moon, Sun, Menu, X, Terminal } from "lucide-react";
 import { useTheme } from "../App";
 import { personal } from "../data/portfolio";
 
