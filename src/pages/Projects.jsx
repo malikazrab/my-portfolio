@@ -1,8 +1,9 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useDeferredValue } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search } from "lucide-react";
 import SectionHeader from "../components/SectionHeader";
 import ProjectCard from "../components/ProjectCard";
+import ScrollReveal from "../components/ScrollReveal";
 import { projects } from "../data/portfolio";
 
 const categories = [
@@ -15,18 +16,21 @@ const categories = [
 export default function Projects() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [search, setSearch] = useState("");
+  const deferredSearch = useDeferredValue(search);
 
   const filtered = useMemo(() => {
+    const normalizedSearch = deferredSearch.trim().toLowerCase();
+
     return projects.filter((p) => {
       const matchCat = activeCategory === "all" || p.category === activeCategory;
       const matchSearch =
-        search.trim() === "" ||
-        p.title.toLowerCase().includes(search.toLowerCase()) ||
-        p.description.toLowerCase().includes(search.toLowerCase()) ||
-        p.tags.some((t) => t.toLowerCase().includes(search.toLowerCase()));
+        normalizedSearch === "" ||
+        p.title.toLowerCase().includes(normalizedSearch) ||
+        p.description.toLowerCase().includes(normalizedSearch) ||
+        p.tags.some((t) => t.toLowerCase().includes(normalizedSearch));
       return matchCat && matchSearch;
     });
-  }, [activeCategory, search]);
+  }, [activeCategory, deferredSearch]);
 
   return (
     <main className="page-section pt-28">
@@ -38,7 +42,7 @@ export default function Projects() {
         />
 
         {/* Filters */}
-        <div className="flex flex-col sm:flex-row gap-4 mb-10">
+        <ScrollReveal className="flex flex-col sm:flex-row gap-4 mb-10" direction="up" duration={0.55}>
           {/* Search */}
           <div className="relative flex-1 max-w-sm">
             <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
@@ -57,7 +61,7 @@ export default function Projects() {
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
-                className={`px-4 py-2.5 rounded-xl text-sm font-display font-medium transition-all duration-200 active:scale-95 ${
+                className={`px-4 py-2.5 rounded-xl text-sm font-display font-medium transition-[background-color,color,box-shadow,transform] duration-200 active:scale-95 ${
                   activeCategory === cat.id
                     ? "brand-gradient text-white shadow-lg shadow-brand-500/25"
                     : "bg-gray-100 dark:bg-dark-600 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-dark-500"
@@ -67,17 +71,18 @@ export default function Projects() {
               </button>
             ))}
           </div>
-        </div>
+        </ScrollReveal>
 
         {/* Results count */}
-        <motion.p
+        <ScrollReveal
           key={`${activeCategory}-${search}`}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          as="p"
+          direction="left"
+          duration={0.35}
           className="text-sm text-gray-400 dark:text-gray-600 font-mono mb-6"
         >
           {filtered.length} project{filtered.length !== 1 ? "s" : ""} found
-        </motion.p>
+        </ScrollReveal>
 
         {/* Grid */}
         <AnimatePresence mode="wait">
@@ -95,16 +100,15 @@ export default function Projects() {
               ))}
             </motion.div>
           ) : (
-            <motion.div
+            <ScrollReveal
               key="empty"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+              direction="up"
               className="text-center py-24"
             >
               <div className="text-4xl mb-4">🔍</div>
               <p className="font-display font-semibold text-gray-400 dark:text-gray-600 mb-2">No projects found</p>
               <p className="text-sm text-gray-400 dark:text-gray-600">Try adjusting your search or filter</p>
-            </motion.div>
+            </ScrollReveal>
           )}
         </AnimatePresence>
       </div>

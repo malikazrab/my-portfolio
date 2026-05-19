@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Mail, Phone, Github, MapPin, Send, CheckCircle2, Loader2 } from "lucide-react";
 import SectionHeader from "../components/SectionHeader";
+import ScrollReveal from "../components/ScrollReveal";
 import { personal } from "../data/portfolio";
+import { viewportOnce } from "../utils/motion";
 
-function ContactCard({ icon, label, value, href }) {
+const ContactCard = memo(function ContactCard({ icon, label, value, href }) {
   return (
     <motion.a
       href={href}
@@ -12,9 +14,9 @@ function ContactCard({ icon, label, value, href }) {
       rel="noopener noreferrer"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
+      viewport={viewportOnce}
       whileHover={{ y: -3 }}
-      className="glass-card rounded-xl p-5 flex items-center gap-4 hover:border-brand-300 dark:hover:border-brand-700 hover:shadow-lg hover:shadow-brand-500/10 transition-all duration-200 group"
+      className="glass-card rounded-xl p-5 flex items-center gap-4 hover:border-brand-300 dark:hover:border-brand-700 hover:shadow-lg hover:shadow-brand-500/10 transition-[transform,box-shadow,background-color,border-color] duration-200 group"
     >
       <div className="w-10 h-10 rounded-xl bg-brand-50 dark:bg-brand-900/20 flex items-center justify-center text-brand-500 group-hover:scale-110 transition-transform duration-200">
         {icon}
@@ -25,7 +27,7 @@ function ContactCard({ icon, label, value, href }) {
       </div>
     </motion.a>
   );
-}
+});
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
@@ -59,7 +61,7 @@ export default function Contact() {
   };
 
   const inputBase =
-    "w-full px-4 py-3 rounded-xl text-sm border bg-white dark:bg-dark-700 text-gray-800 dark:text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 transition-all duration-200";
+    "w-full px-4 py-3 rounded-xl text-sm border bg-white dark:bg-dark-700 text-gray-800 dark:text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 transition-[background-color,border-color,color,box-shadow] duration-200";
   const inputNormal = "border-gray-200 dark:border-white/10 focus:border-brand-400 dark:focus:border-brand-500 focus:ring-brand-400/20";
   const inputError = "border-red-300 dark:border-red-700 focus:border-red-400 focus:ring-red-400/20";
 
@@ -102,12 +104,7 @@ export default function Contact() {
             />
 
             {/* Availability notice */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="glass-card rounded-xl p-5"
-            >
+            <ScrollReveal className="glass-card spotlight-card rounded-xl p-5" direction="up">
               <div className="flex items-center gap-2 mb-2">
                 <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
                 <span className="font-display font-semibold text-sm dark:text-white">Currently Available</span>
@@ -115,18 +112,12 @@ export default function Contact() {
               <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
                 Open to freelance projects, contract work, and full-time opportunities. Typical response time: <strong className="text-brand-500">under 24 hours</strong>.
               </p>
-            </motion.div>
+            </ScrollReveal>
           </div>
 
           {/* Right: Form */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="lg:col-span-3"
-          >
-            <div className="glass-card rounded-2xl p-6 sm:p-8">
+          <ScrollReveal className="lg:col-span-3" direction="left" delay={0.08}>
+            <div className="glass-card spotlight-card rounded-2xl p-6 sm:p-8">
               <AnimatePresence mode="wait">
                 {status === "success" ? (
                   <motion.div
@@ -246,7 +237,7 @@ export default function Contact() {
                 )}
               </AnimatePresence>
             </div>
-          </motion.div>
+          </ScrollReveal>
         </div>
       </div>
     </main>

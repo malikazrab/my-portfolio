@@ -1,6 +1,6 @@
-import React, { useState, useEffect, createContext, useContext } from "react";
+import React, { useState, useEffect, createContext, useContext, useMemo } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
@@ -10,6 +10,7 @@ import Skills from "./pages/Skills";
 import Experience from "./pages/Experience";
 import Contact from "./pages/Contact";
 import "./index.css";
+import { easeOutExpo } from "./utils/motion";
 
 export const ThemeContext = createContext();
 
@@ -17,25 +18,36 @@ export const useTheme = () => useContext(ThemeContext);
 
 const pageVariants = {
   initial: { opacity: 0, y: 10 },
-  animate: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] } },
-  exit: { opacity: 0, transition: { duration: 0.2 } },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.28, ease: easeOutExpo },
+  },
 };
+
+function ScrollToTop() {
+  const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [location.pathname]);
+
+  return null;
+}
 
 function AnimatedRoutes() {
   const location = useLocation();
   return (
-    <AnimatePresence mode="wait">
-      <motion.div key={location.pathname} variants={pageVariants} initial="initial" animate="animate" exit="exit">
-        <Routes location={location}>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/skills" element={<Skills />} />
-          <Route path="/experience" element={<Experience />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
-      </motion.div>
-    </AnimatePresence>
+    <motion.div key={location.pathname} variants={pageVariants} initial="initial" animate="animate">
+      <Routes location={location}>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/projects" element={<Projects />} />
+        <Route path="/skills" element={<Skills />} />
+        <Route path="/experience" element={<Experience />} />
+        <Route path="/contact" element={<Contact />} />
+      </Routes>
+    </motion.div>
   );
 }
 
@@ -48,14 +60,16 @@ export default function App() {
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", dark);
-    document.body.classList.toggle("dark", dark);
     localStorage.setItem("theme", dark ? "dark" : "light");
   }, [dark]);
 
+  const themeValue = useMemo(() => ({ dark, setDark }), [dark]);
+
   return (
-    <ThemeContext.Provider value={{ dark, setDark }}>
+    <ThemeContext.Provider value={themeValue}>
       <Router>
-        <div className={`min-h-screen transition-colors duration-500 ease-in-out ${dark ? "dark bg-dark-900 text-gray-100" : "bg-white text-gray-900"}`}>
+        <ScrollToTop />
+        <div className={`min-h-screen transition-colors duration-200 ease-out ${dark ? "bg-dark-900 text-gray-100" : "bg-white text-gray-900"}`}>
           <Navbar />
           <AnimatedRoutes />
           <Footer />

@@ -2,14 +2,16 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Briefcase, Calendar, CheckCircle2, Award } from "lucide-react";
 import SectionHeader from "../components/SectionHeader";
+import ScrollReveal from "../components/ScrollReveal";
 import { experience } from "../data/portfolio";
+import { viewportOnce } from "../utils/motion";
 
 function ExperienceCard({ exp, index }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
+      viewport={viewportOnce}
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: index * 0.15 }}
       className="relative"
     >
@@ -53,7 +55,7 @@ function ExperienceCard({ exp, index }) {
 
           {/* Highlights */}
           <div className="mb-6">
-            <h4 className="font-display font-semibold text-sm dark:text-white mb-3">Key Achievements</h4>
+            <h4 className="section-accent font-display font-semibold text-sm dark:text-white mb-5">Key Achievements</h4>
             <ul className="space-y-2">
               {exp.highlights.map((h) => (
                 <li key={h} className="flex items-start gap-2.5 text-sm text-gray-600 dark:text-gray-300">
@@ -94,12 +96,7 @@ export default function Experience() {
         </div>
 
         {/* Achievements */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="glass-card rounded-2xl p-8 mb-12"
-        >
+        <ScrollReveal className="glass-card spotlight-card rounded-2xl p-8 mb-12" direction="up">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-10 h-10 rounded-xl bg-brand-50 dark:bg-brand-900/20 flex items-center justify-center text-brand-500">
               <Award size={18} />
@@ -113,22 +110,24 @@ export default function Experience() {
               { value: "6+", label: "Years experience" },
               { value: "30+", label: "Happy clients" },
               { value: "3", label: "Platforms mastered" },
-            ].map((m) => (
-              <div key={m.label} className="text-center">
+            ].map((m, i) => (
+              <motion.div
+                key={m.label}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={viewportOnce}
+                transition={{ delay: i * 0.05, duration: 0.35 }}
+                className="text-center"
+              >
                 <div className="font-display font-extrabold text-3xl text-gradient mb-1">{m.value}</div>
                 <div className="text-xs text-gray-500 dark:text-gray-400">{m.label}</div>
-              </div>
+              </motion.div>
             ))}
           </div>
-        </motion.div>
+        </ScrollReveal>
 
         {/* Availability */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="relative overflow-hidden rounded-2xl brand-gradient p-8 text-white text-center shadow-2xl shadow-brand-500/25"
-        >
+        <ScrollReveal className="relative overflow-hidden rounded-2xl brand-gradient p-8 text-white text-center shadow-2xl shadow-brand-500/25" direction="up">
           <div className="absolute inset-0 grid-pattern opacity-20" />
           <div className="relative z-10">
             <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 rounded-full bg-white/20 text-sm font-mono">
@@ -140,7 +139,7 @@ export default function Experience() {
               Whether it's a full-time role, long-term contract, or an exciting startup — I'd love to hear about it.
             </p>
           </div>
-        </motion.div>
+        </ScrollReveal>
       </div>
     </main>
   );
