@@ -14,7 +14,7 @@
   }
 
   html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto; /* Let Lenis handle smooth scrolling */
     -webkit-tap-highlight-color: transparent;
   }
 
@@ -26,6 +26,13 @@
   .dark body {
     @apply bg-dark-900 text-gray-100;
   }
+
+  /* GPU acceleration for scroll animations */
+  [style*="yPercent"],
+  [style*="transform"] {
+    will-change: transform;
+  }
+
 
   ::selection {
     background: rgba(20, 184, 166, 0.3);

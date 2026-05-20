@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Moon, Sun, Menu, X, Terminal } from "lucide-react";
 import { useTheme } from "../App";
 import { personal } from "../data/portfolio";
+import Magnetic from "./Magnetic";
 
 const navLinks = [
   { to: "/", label: "Home" },
@@ -74,58 +75,63 @@ function Navbar() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 sm:h-18">
             {/* Logo */}
-            <Link to="/" className="flex items-center gap-2 group">
-              <div className="w-8 h-8 rounded-lg brand-gradient flex items-center justify-center shadow-lg shadow-brand-500/30 transition-transform duration-200 group-hover:scale-105">
-                <Terminal size={15} className="text-white" />
-              </div>
-              <span className="font-display font-bold text-base sm:text-lg tracking-tight dark:text-white">
-                Hafiz<span className="text-brand-500">.</span>
-              </span>
-            </Link>
+            <Magnetic speed={0.4} range={12}>
+              <Link to="/" className="flex items-center gap-2 group">
+                <div className="w-8 h-8 rounded-lg brand-gradient flex items-center justify-center shadow-lg shadow-brand-500/30 transition-transform duration-200 group-hover:scale-105">
+                  <Terminal size={15} className="text-white" />
+                </div>
+                <span className="font-display font-bold text-base sm:text-lg tracking-tight dark:text-white">
+                  Hafiz<span className="text-brand-500">.</span>
+                </span>
+              </Link>
+            </Magnetic>
 
             {/* Desktop Nav */}
             <nav className="hidden md:flex items-center gap-1">
               {navLinks.map((link) => (
-                <Link
-                  key={link.to}
-                  to={link.to}
-                  className={`relative px-4 py-2 rounded-lg text-sm font-display font-medium transition-colors duration-200 ${
-                    isActive(link.to)
-                      ? "text-brand-500 dark:text-brand-400"
-                      : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
-                  }`}
-                >
-                  {link.label}
-                  {isActive(link.to) && (
-                    <motion.div
-                      layoutId="nav-pill"
-                      className="absolute inset-0 rounded-lg bg-brand-50 dark:bg-brand-900/20 -z-10"
-                      transition={{ type: "spring", stiffness: 320, damping: 28 }}
-                    />
-                  )}
-                </Link>
+                <Magnetic key={link.to} speed={0.4} range={10}>
+                  <Link
+                    to={link.to}
+                    className={`relative px-4 py-2 rounded-lg text-sm font-display font-medium transition-colors duration-200 ${
+                      isActive(link.to)
+                        ? "text-brand-500 dark:text-brand-400"
+                        : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                    }`}
+                  >
+                    {link.label}
+                    {isActive(link.to) && (
+                      <motion.div
+                        layoutId="nav-pill"
+                        className="absolute inset-0 rounded-lg bg-brand-50 dark:bg-brand-900/20 -z-10"
+                        transition={{ type: "spring", stiffness: 320, damping: 28 }}
+                      />
+                    )}
+                  </Link>
+                </Magnetic>
               ))}
             </nav>
 
             {/* Right controls */}
             <div className="flex items-center gap-2">
-              <button
-                onClick={() => setDark(!dark)}
-                className="w-9 h-9 rounded-xl flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-brand-500 dark:hover:text-brand-400 hover:bg-gray-100 dark:hover:bg-dark-600 transition-[color,background-color,transform] duration-200 active:scale-90"
-                aria-label="Toggle dark mode"
-              >
-                <AnimatePresence mode="wait" initial={false}>
-                  <motion.div
-                    key={dark ? "moon" : "sun"}
-                    initial={{ rotate: -90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: 90, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    {dark ? <Sun size={16} /> : <Moon size={16} />}
-                  </motion.div>
-                </AnimatePresence>
-              </button>
+              <Magnetic speed={0.4} range={10}>
+                <button
+                  onClick={() => setDark(!dark)}
+                  className="w-9 h-9 rounded-xl flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-brand-500 dark:hover:text-brand-400 hover:bg-gray-100 dark:hover:bg-dark-600 transition-[color,background-color,transform] duration-200 active:scale-90"
+                  aria-label="Toggle dark mode"
+                >
+                  <AnimatePresence mode="wait" initial={false}>
+                    <motion.div
+                      key={dark ? "moon" : "sun"}
+                      initial={{ rotate: -90, opacity: 0 }}
+                      animate={{ rotate: 0, opacity: 1 }}
+                      exit={{ rotate: 90, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      {dark ? <Sun size={16} /> : <Moon size={16} />}
+                    </motion.div>
+                  </AnimatePresence>
+                </button>
+              </Magnetic>
 
               {/* Hamburger */}
               <button

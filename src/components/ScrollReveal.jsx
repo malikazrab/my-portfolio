@@ -1,38 +1,68 @@
-import React, { memo } from "react";
-import { motion, useReducedMotion } from "framer-motion";
-import { easeOutExpo, viewportOnce } from "../utils/motion";
+import React, { useRef, memo } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { shouldReduceMotion } from "../utils/performance";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const directionOffsets = {
-  up: { x: 0, y: 26 },
-  down: { x: 0, y: -26 },
-  left: { x: 28, y: 0 },
-  right: { x: -28, y: 0 },
+  up: { x: 0, y: 30 },
+  down: { x: 0, y: -30 },
+  left: { x: 35, y: 0 },
+  right: { x: -35, y: 0 },
 };
 
 function ScrollReveal({
   children,
-  as = "div",
-  className,
+  as: Component = "div",
+  className = "",
   direction = "up",
   delay = 0,
-  duration = 0.7,
-  amount = 0.98,
-  viewport = viewportOnce,
+  duration = 0.8,
+  amount = 0.98, // Start scale
   ...props
 }) {
-  const prefersReducedMotion = useReducedMotion();
-  const { x, y } = directionOffsets[direction] || directionOffsets.up;
-  const Component = motion[as] || motion.div;
+  const elementRef = useRef(null);
+
+  useGSAP(() => {
+    const el = elementRef.current;
+    if (!el) return;
+
+    if (shouldReduceMotion()) {
+      gsap.set(el, { opacity: 1, x: 0, y: 0, scale: 1 });
+      return;
+    }
+
+    const { x, y } = directionOffsets[direction] || directionOffsets.up;
+
+    gsap.fromTo(
+      el,
+      {
+        opacity: 0,
+        x: x,
+        y: y,
+        scale: amount,
+      },
+      {
+        opacity: 1,
+        x: 0,
+        y: 0,
+        scale: 1,
+        duration: duration,
+        delay: delay,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: el,
+          start: "top 90%", // Trigger when top of element is 90% down the viewport
+          toggleActions: "play none none none",
+        },
+      }
+    );
+  }, { scope: elementRef, dependencies: [direction, delay, duration, amount] });
 
   return (
-    <Component
-      initial={prefersReducedMotion ? false : { opacity: 0, x, y, scale: amount }}
-      whileInView={prefersReducedMotion ? undefined : { opacity: 1, x: 0, y: 0, scale: 1 }}
-      viewport={prefersReducedMotion ? undefined : viewport}
-      transition={{ duration, delay, ease: easeOutExpo }}
-      className={className}
-      {...props}
-    >
+    <Component ref={elementRef} className={className} {...props}>
       {children}
     </Component>
   );
