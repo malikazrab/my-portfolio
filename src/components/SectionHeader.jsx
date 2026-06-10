@@ -1,43 +1,23 @@
 import React, { memo } from "react";
-import { motion } from "framer-motion";
-import { easeOutExpo, revealSoft, staggerContainer, viewportOnce } from "../utils/motion";
+import ScrollReveal from "./ScrollReveal";
 
 function SectionHeader({ tag, title, subtitle, center = false }) {
   return (
-    <motion.div
-      variants={staggerContainer(0.02, 0.08)}
-      initial="hidden"
-      whileInView="visible"
-      viewport={viewportOnce}
-      className={`mb-12 sm:mb-16 ${center ? "text-center" : ""}`}
-    >
+    <ScrollReveal className={`mb-10 sm:mb-14 ${center ? "text-center" : ""}`} direction="up">
       {tag && (
-        <motion.div variants={revealSoft} className={`mb-4 ${center ? "flex justify-center" : ""}`}>
+        <div className={`mb-4 ${center ? "flex justify-center" : ""}`}>
           <span className="section-tag">{tag}</span>
-        </motion.div>
+        </div>
       )}
-      <motion.h2
-        variants={revealSoft}
-        className="section-accent font-display font-extrabold text-3xl sm:text-4xl lg:text-5xl dark:text-white leading-tight mb-5"
-      >
+      <h2 className="section-accent font-display font-semibold text-3xl sm:text-4xl lg:text-5xl leading-tight mb-4 text-slate-900 dark:text-white">
         {title}
-      </motion.h2>
+      </h2>
       {subtitle && (
-        <motion.p
-          variants={{
-            hidden: { opacity: 0, y: 18 },
-            visible: {
-              opacity: 1,
-              y: 0,
-              transition: { duration: 0.75, delay: 0.04, ease: easeOutExpo },
-            },
-          }}
-          className={`text-gray-500 dark:text-gray-400 text-base sm:text-lg leading-relaxed ${center ? "max-w-2xl mx-auto" : "max-w-xl"}`}
-        >
+        <p className={`text-slate-600 dark:text-slate-400 text-base sm:text-lg leading-relaxed ${center ? "max-w-2xl mx-auto" : "max-w-xl"}`}>
           {subtitle}
-        </motion.p>
+        </p>
       )}
-    </motion.div>
+    </ScrollReveal>
   );
 }
 

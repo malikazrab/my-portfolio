@@ -1,16 +1,11 @@
-import React, { useRef, memo } from "react";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import React, { memo, useEffect, useMemo, useRef, useState } from "react";
 import { shouldReduceMotion } from "../utils/performance";
 
-gsap.registerPlugin(ScrollTrigger);
-
 const directionOffsets = {
-  up: { x: 0, y: 30 },
-  down: { x: 0, y: -30 },
-  left: { x: 35, y: 0 },
-  right: { x: -35, y: 0 },
+  up: "translate3d(0, 18px, 0)",
+  down: "translate3d(0, -18px, 0)",
+  left: "translate3d(18px, 0, 0)",
+  right: "translate3d(-18px, 0, 0)",
 };
 
 function ScrollReveal({
@@ -19,50 +14,53 @@ function ScrollReveal({
   className = "",
   direction = "up",
   delay = 0,
-  duration = 0.8,
-  amount = 0.98, // Start scale
+  duration = 760,
+  threshold = 0.14,
+  style,
   ...props
 }) {
   const elementRef = useRef(null);
+  const [visible, setVisible] = useState(() => shouldReduceMotion());
 
-  useGSAP(() => {
+  useEffect(() => {
     const el = elementRef.current;
-    if (!el) return;
+    if (!el || visible) return undefined;
 
     if (shouldReduceMotion()) {
-      gsap.set(el, { opacity: 1, x: 0, y: 0, scale: 1 });
-      return;
+      setVisible(true);
+      return undefined;
     }
 
-    const { x, y } = directionOffsets[direction] || directionOffsets.up;
-
-    gsap.fromTo(
-      el,
-      {
-        opacity: 0,
-        x: x,
-        y: y,
-        scale: amount,
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
       },
-      {
-        opacity: 1,
-        x: 0,
-        y: 0,
-        scale: 1,
-        duration: duration,
-        delay: delay,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: el,
-          start: "top 90%", // Trigger when top of element is 90% down the viewport
-          toggleActions: "play none none none",
-        },
-      }
+      { threshold }
     );
-  }, { scope: elementRef, dependencies: [direction, delay, duration, amount] });
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [threshold, visible]);
+
+  const transitionStyle = useMemo(
+    () => ({
+      opacity: visible ? 1 : 0,
+      transform: visible ? "translate3d(0, 0, 0)" : directionOffsets[direction] || directionOffsets.up,
+      transitionProperty: "opacity, transform",
+      transitionDuration: `${duration}ms`,
+      transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
+      transitionDelay: `${delay}ms`,
+      willChange: "opacity, transform",
+      ...style,
+    }),
+    [delay, direction, duration, style, visible]
+  );
 
   return (
-    <Component ref={elementRef} className={className} {...props}>
+    <Component ref={elementRef} className={className} style={transitionStyle} {...props}>
       {children}
     </Component>
   );

@@ -1,5 +1,4 @@
 import React, { memo } from "react";
-import { motion, useReducedMotion } from "framer-motion";
 
 function InteractivePanel({
   children,
@@ -8,18 +7,13 @@ function InteractivePanel({
   hover = true,
   ...props
 }) {
-  const prefersReducedMotion = useReducedMotion();
-
   return (
-    <motion.div
-      className={className}
-      whileHover={hover && !prefersReducedMotion ? { y: -6, scale: 1.01 } : undefined}
-      transition={{ type: "spring", stiffness: 220, damping: 24, mass: 0.65 }}
-      style={{ willChange: "transform" }}
+    <div
+      className={`${className} ${hover ? "panel-hover" : ""}`}
       {...props}
     >
       <div className={innerClassName}>{children}</div>
-    </motion.div>
+    </div>
   );
 }
 

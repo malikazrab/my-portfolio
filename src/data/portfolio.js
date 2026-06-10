@@ -114,7 +114,7 @@ export const skills = {
     border: "border-red-200 dark:border-red-800",
     items: [
       { name: "Laravel", level: 95, note: "Primary framework" },
-      { name: "PHP", level: 93, note: "6+ years" },
+      { name: "PHP", level: 93, note: "2+ years" },
       { name: "RESTful APIs", level: 92, note: "Design & implementation" },
       { name: "MySQL", level: 88, note: "Query optimization" },
       { name: "PostgreSQL", level: 80, note: "Complex schemas" },

@@ -1,12 +1,15 @@
-export const prefersReducedMotion = () =>
-  typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const safeMatchMedia = (query) =>
+  typeof window !== "undefined" && typeof window.matchMedia === "function"
+    ? window.matchMedia(query).matches
+    : false;
+
+export const prefersReducedMotion = () => safeMatchMedia("(prefers-reduced-motion: reduce)");
 
 export const prefersReducedData = () =>
   typeof navigator !== "undefined" && navigator.connection?.saveData === true;
 
 export const isTouchInput = () =>
-  typeof window !== "undefined" &&
-  (window.matchMedia("(pointer: coarse)").matches || window.innerWidth < 1024);
+  safeMatchMedia("(pointer: coarse)") || (typeof window !== "undefined" && window.innerWidth < 1024);
 
 export const isLowMemoryDevice = () =>
   typeof navigator !== "undefined" &&
@@ -14,4 +17,4 @@ export const isLowMemoryDevice = () =>
   navigator.deviceMemory <= 2;
 
 export const shouldReduceMotion = () =>
-  prefersReducedMotion() || prefersReducedData() || isTouchInput() || isLowMemoryDevice();
+  prefersReducedMotion() || prefersReducedData() || isLowMemoryDevice();
