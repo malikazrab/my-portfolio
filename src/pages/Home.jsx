@@ -54,7 +54,7 @@ export default function Home() {
   const featured = useMemo(() => projects.filter((project) => project.featured), []);
 
   return (
-    <main className="page-shell overflow-hidden">
+    <main className="page-shell">
       <section className="relative min-h-[calc(100svh-4rem)] flex items-start sm:items-center pt-24 sm:pt-20 pb-10 sm:pb-0 noise-bg">
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-300/40 to-transparent" />
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-20 w-full relative z-10">
