@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Moon, Sun, Menu, X } from "lucide-react";
 import { useTheme } from "../App";
 import { personal } from "../data/portfolio";
+import { shouldUseLiteMode } from "../utils/performance";
 
 const navLinks = [
   { to: "/", label: "Home" },
@@ -18,6 +19,7 @@ function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [routePulse, setRoutePulse] = useState(false);
+  const liteMode = shouldUseLiteMode();
   const location = useLocation();
   const menuRef = useRef(null);
 
@@ -26,10 +28,15 @@ function Navbar() {
   }, [location]);
 
   useEffect(() => {
+    if (liteMode) {
+      setRoutePulse(false);
+      return undefined;
+    }
+
     setRoutePulse(true);
     const timer = window.setTimeout(() => setRoutePulse(false), 360);
     return () => window.clearTimeout(timer);
-  }, [location.pathname]);
+  }, [liteMode, location.pathname]);
 
   useEffect(() => {
     const handler = (e) => {
@@ -46,6 +53,11 @@ function Navbar() {
   }, [open]);
 
   useEffect(() => {
+    if (liteMode) {
+      setScrolled(true);
+      return undefined;
+    }
+
     const onScroll = () => {
       const nextScrolled = window.scrollY > 20;
       setScrolled((prev) => (prev === nextScrolled ? prev : nextScrolled));
@@ -54,7 +66,7 @@ function Navbar() {
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [liteMode]);
 
   useEffect(() => {
     if (open) {

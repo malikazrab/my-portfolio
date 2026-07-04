@@ -2,6 +2,7 @@ import React, { createContext, lazy, Suspense, useContext, useEffect, useMemo, u
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import { shouldUseLiteMode, shouldReduceMotion } from "./utils/performance";
 import "./index.css";
 
 const Home = lazy(() => import("./pages/Home"));
@@ -73,6 +74,8 @@ export default function App() {
     document.documentElement.classList.toggle("dark", dark);
     document.documentElement.dataset.theme = dark ? "dark" : "light";
     document.documentElement.style.colorScheme = dark ? "dark" : "light";
+    document.documentElement.dataset.performance = shouldUseLiteMode() ? "lite" : "full";
+    document.documentElement.dataset.motion = shouldReduceMotion() ? "reduced" : "full";
 
     const themeColorMeta = document.querySelector('meta[name="theme-color"]');
     if (themeColorMeta) {

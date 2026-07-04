@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useMemo, useRef, useState } from "react";
-import { shouldReduceMotion } from "../utils/performance";
+import { shouldUseLiteMode } from "../utils/performance";
 
 const directionOffsets = {
   up: "translate3d(0, 18px, 0)",
@@ -20,13 +20,14 @@ function ScrollReveal({
   ...props
 }) {
   const elementRef = useRef(null);
-  const [visible, setVisible] = useState(() => shouldReduceMotion());
+  const liteMode = shouldUseLiteMode();
+  const [visible, setVisible] = useState(() => liteMode);
 
   useEffect(() => {
     const el = elementRef.current;
     if (!el || visible) return undefined;
 
-    if (shouldReduceMotion()) {
+    if (liteMode) {
       setVisible(true);
       return undefined;
     }
@@ -43,20 +44,20 @@ function ScrollReveal({
 
     observer.observe(el);
     return () => observer.disconnect();
-  }, [threshold, visible]);
+  }, [liteMode, threshold, visible]);
 
   const transitionStyle = useMemo(
     () => ({
       opacity: visible ? 1 : 0,
       transform: visible ? "translate3d(0, 0, 0)" : directionOffsets[direction] || directionOffsets.up,
       transitionProperty: "opacity, transform",
-      transitionDuration: `${duration}ms`,
+      transitionDuration: liteMode ? "1ms" : `${duration}ms`,
       transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
       transitionDelay: `${delay}ms`,
-      willChange: "opacity, transform",
+      willChange: liteMode ? "auto" : "opacity, transform",
       ...style,
     }),
-    [delay, direction, duration, style, visible]
+    [delay, direction, duration, liteMode, style, visible]
   );
 
   return (

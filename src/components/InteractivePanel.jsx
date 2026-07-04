@@ -1,4 +1,5 @@
 import React, { memo } from "react";
+import { shouldUseLiteMode } from "../utils/performance";
 
 function InteractivePanel({
   children,
@@ -7,9 +8,11 @@ function InteractivePanel({
   hover = true,
   ...props
 }) {
+  const enableHover = hover && !shouldUseLiteMode();
+
   return (
     <div
-      className={`${className} ${hover ? "panel-hover" : ""}`}
+      className={`${className} ${enableHover ? "panel-hover" : ""}`}
       {...props}
     >
       <div className={innerClassName}>{children}</div>
