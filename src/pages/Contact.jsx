@@ -69,10 +69,10 @@ export default function Contact() {
 
         <div className="grid lg:grid-cols-5 gap-10 lg:gap-16">
           <div className="lg:col-span-2 space-y-5">
-            <ContactCard icon={<Mail size={16} />} label="Email" value={personal.email} href={`mailto:${personal.email}`} />
-            <ContactCard icon={<Phone size={16} />} label="Phone" value={personal.phone} href={`tel:${personal.phone.replace(/[^+\d]/g, "")}`} />
-            <ContactCard icon={<Github size={16} />} label="GitHub" value={`github.com/${personal.github}`} href={personal.githubUrl} />
-            <ContactCard icon={<Linkedin size={16} />} label="LinkedIn" value={`linkedin.com/in/${personal.linkedin}`} href={personal.linkedinUrl} />
+            <ContactCard icon={<Mail size={16} />} label="Email" value={personal.email} href={personal.emailHref} />
+            <ContactCard icon={<Phone size={16} />} label="Phone" value={personal.phone} href={personal.phoneHref} />
+            <ContactCard icon={<Github size={16} />} label="GitHub" value={personal.githubDisplay} href={personal.githubUrl} />
+            <ContactCard icon={<Linkedin size={16} />} label="LinkedIn" value={personal.linkedinDisplay} href={personal.linkedinUrl} />
             <ContactCard
               icon={<MapPin size={16} />}
               label="Location"
@@ -186,7 +186,7 @@ export default function Contact() {
 
                   <p className="text-xs text-center text-slate-500 dark:text-slate-400 font-mono">
                     Or email me directly at{" "}
-                    <a href={`mailto:${personal.email}`} className="text-cyan-300 hover:underline">
+                    <a href={personal.emailHref} className="text-cyan-300 hover:underline">
                       {personal.email}
                     </a>
                   </p>

@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Code2, Database, Github, Linkedin, Mail, Phone, Smartphone, Sparkles } from "lucide-react";
 import { personal, projects } from "../data/portfolio";
@@ -51,7 +51,7 @@ function StatTile({ value, label }) {
 }
 
 export default function Home() {
-  const featured = useMemo(() => projects.filter((project) => project.featured), []);
+  const featured = projects.filter((project) => project.featured);
 
   return (
     <main className="page-shell">
@@ -98,17 +98,17 @@ export default function Home() {
               <ScrollReveal direction="up" delay={170} className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
                 <a href={personal.githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 hover:text-cyan-400 transition-colors">
                   <Github size={15} />
-                  malikazrab
+                  {personal.githubDisplay}
                 </a>
                 <a href={personal.linkedinUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 hover:text-cyan-400 transition-colors">
                   <Linkedin size={15} />
-                  linkedin.com/in/hafiz-azrab-399363391
+                  {personal.linkedinDisplay}
                 </a>
-                <a href={`mailto:${personal.email}`} className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 hover:text-cyan-400 transition-colors">
+                <a href={personal.emailHref} className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 hover:text-cyan-400 transition-colors">
                   <Mail size={15} />
                   {personal.email}
                 </a>
-                <a href={`tel:${personal.phone.replace(/[^+\d]/g, "")}`} className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 hover:text-cyan-400 transition-colors">
+                <a href={personal.phoneHref} className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 hover:text-cyan-400 transition-colors">
                   <Phone size={15} />
                   {personal.phone}
                 </a>
@@ -117,14 +117,21 @@ export default function Home() {
 
             <ScrollReveal direction="up" delay={120} className="mt-2 sm:mt-0">
               <InteractivePanel className="glass-card spotlight-card rounded-[1.75rem] p-5 sm:p-8 hero-float motion-sheen" innerClassName="relative z-10">
-                <div className="flex items-center justify-between mb-6">
-                  <div>
+                <div className="flex flex-col sm:flex-row items-center sm:items-start justify-between gap-4 mb-6 text-center sm:text-left">
+                  <div className="order-2 sm:order-1">
                     <p className="text-xs font-mono text-cyan-200/80">Profile</p>
                     <h2 className="font-display font-semibold text-xl sm:text-2xl text-white mt-1">{personal.name}</h2>
                     <p className="text-sm text-cyan-200/90 mt-1">{personal.title}</p>
                   </div>
-                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl brand-gradient flex items-center justify-center text-white font-display font-semibold text-lg sm:text-xl shadow-lg shadow-cyan-500/20 pulse-soft">
-                    HAK
+                  <div className="order-1 sm:order-2 w-20 h-20 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border border-white/15 shadow-lg shadow-cyan-500/20">
+                    <img
+                      src={personal.photo}
+                      alt={personal.photoAlt}
+                      className="w-full h-full object-cover object-top"
+                      loading="eager"
+                      fetchPriority="high"
+                      decoding="async"
+                    />
                   </div>
                 </div>
 

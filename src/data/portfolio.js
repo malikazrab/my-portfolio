@@ -1,13 +1,21 @@
+import profilePhoto from "../assets/profile.png";
+
 export const personal = {
   name: "Hafiz Azrab Karamat",
   title: "PHP / Laravel Developer | Full-Stack Web Developer",
   tagline: "Building responsive web applications with Laravel, PHP, and modern frontend tools",
+  photo: profilePhoto,
+  photoAlt: "Portrait of Hafiz Azrab Karamat in a black suit and tie",
   email: "malikazrab2007@gmail.com",
   phone: "+92 (324) 2349720",
+  emailHref: "mailto:malikazrab2007@gmail.com",
+  phoneHref: "tel:+923242349720",
   github: "malikazrab",
   githubUrl: "https://github.com/malikazrab",
   linkedin: "hafiz-azrab-399363391",
   linkedinUrl: "https://linkedin.com/in/hafiz-azrab-399363391",
+  githubDisplay: "github.com/malikazrab",
+  linkedinDisplay: "linkedin.com/in/hafiz-azrab-399363391",
   location: "Lahore, Pakistan",
   bio: "Motivated Software Engineering student and aspiring Full-Stack PHP/Laravel Developer with hands-on experience in frontend and backend web development. Proficient in building responsive, user-friendly web applications using HTML5, CSS3, Bootstrap, JavaScript, React, PHP, and Laravel. Demonstrates strong knowledge of CRUD application development, MVC architecture, and MySQL database design.",
   shortBio: "Software Engineering student and PHP/Laravel developer focused on responsive web apps, MVC architecture, CRUD systems, and MySQL design.",

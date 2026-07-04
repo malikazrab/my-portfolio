@@ -46,13 +46,13 @@ function Footer() {
             <h4 className="font-display font-semibold text-sm text-slate-900 dark:text-white mb-4">Get in Touch</h4>
             <ul className="space-y-2.5">
               <li>
-                <a href={`mailto:${personal.email}`} className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-200 transition-colors motion-sheen">
+                <a href={personal.emailHref} className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-200 transition-colors motion-sheen">
                   <Mail size={13} />
                   {personal.email}
                 </a>
               </li>
               <li>
-                <a href={`tel:${personal.phone.replace(/[^+\d]/g, "")}`} className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-200 transition-colors motion-sheen">
+                <a href={personal.phoneHref} className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-200 transition-colors motion-sheen">
                   <Phone size={13} />
                   {personal.phone}
                 </a>
@@ -60,13 +60,13 @@ function Footer() {
               <li>
                 <a href={personal.githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-200 transition-colors motion-sheen">
                   <Github size={13} />
-                  github.com/{personal.github}
+                  {personal.githubDisplay}
                 </a>
               </li>
               <li>
                 <a href={personal.linkedinUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-200 transition-colors motion-sheen">
                   <Linkedin size={13} />
-                  linkedin.com/in/{personal.linkedin}
+                  {personal.linkedinDisplay}
                 </a>
               </li>
             </ul>

@@ -19,9 +19,15 @@ export default function About() {
         <div className="grid lg:grid-cols-5 gap-10 lg:gap-14 items-start">
           <div className="lg:col-span-2 space-y-5">
             <ScrollReveal direction="up">
-              <InteractivePanel className="glass-card spotlight-card rounded-3xl p-7 text-center h-full" innerClassName="relative z-10">
-                <div className="w-28 h-28 rounded-2xl brand-gradient flex items-center justify-center text-white font-display font-semibold text-4xl mx-auto mb-5 shadow-2xl shadow-cyan-500/25">
-                  HAK
+              <InteractivePanel className="glass-card spotlight-card rounded-3xl p-6 sm:p-7 text-center h-full" innerClassName="relative z-10">
+                <div className="w-28 h-28 rounded-2xl overflow-hidden border border-white/15 mx-auto mb-5 shadow-2xl shadow-cyan-500/25">
+                  <img
+                    src={personal.photo}
+                    alt={personal.photoAlt}
+                    className="w-full h-full object-cover object-top"
+                    loading="lazy"
+                    decoding="async"
+                  />
                 </div>
                 <h2 className="font-display font-semibold text-2xl text-slate-900 dark:text-white mb-1">{personal.name}</h2>
                 <p className="text-cyan-300 font-mono text-sm mb-5">{personal.title}</p>
@@ -30,10 +36,10 @@ export default function About() {
                   <a href={personal.githubUrl} target="_blank" rel="noopener noreferrer" className="icon-btn" aria-label="GitHub">
                     <Github size={16} />
                   </a>
-                  <a href={`mailto:${personal.email}`} className="icon-btn" aria-label="Email">
+                  <a href={personal.emailHref} className="icon-btn" aria-label="Email">
                     <Mail size={16} />
                   </a>
-                  <a href={`tel:${personal.phone.replace(/[^+\d]/g, "")}`} className="icon-btn" aria-label="Phone">
+                  <a href={personal.phoneHref} className="icon-btn" aria-label="Phone">
                     <Phone size={16} />
                   </a>
                 </div>
@@ -43,8 +49,8 @@ export default function About() {
                     { icon: <MapPin size={13} />, value: personal.location },
                     { icon: <Mail size={13} />, value: personal.email },
                     { icon: <Phone size={13} />, value: personal.phone },
-                    { icon: <Github size={13} />, value: `github.com/${personal.github}` },
-                    { icon: <Linkedin size={13} />, value: `linkedin.com/in/${personal.linkedin}` },
+                    { icon: <Github size={13} />, value: personal.githubDisplay },
+                    { icon: <Linkedin size={13} />, value: personal.linkedinDisplay },
                   ].map((item) => (
                     <div key={item.value} className="flex items-center gap-2.5 text-sm text-slate-500 dark:text-slate-400">
                       <span className="text-cyan-300 shrink-0">{item.icon}</span>
