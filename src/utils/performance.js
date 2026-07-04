@@ -20,4 +20,4 @@ export const shouldReduceMotion = () =>
   prefersReducedMotion() || prefersReducedData() || isLowMemoryDevice();
 
 export const shouldUseLiteMode = () =>
-  shouldReduceMotion() || isTouchInput();
+  shouldReduceMotion();

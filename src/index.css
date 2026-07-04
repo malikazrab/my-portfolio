@@ -288,8 +288,9 @@
 
   .btn-ghost {
     @apply px-6 py-3 rounded-xl font-display font-semibold text-sm border border-white/10;
-    color: #e2e8f0;
-    background: rgba(255, 255, 255, 0.04);
+    color: #f8fafc;
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
   }
 
   .icon-btn {
@@ -575,6 +576,14 @@
   .skill-pill,
   .chip {
     animation: mobile-surface 7.5s ease-in-out infinite;
+  }
+}
+
+@media (max-width: 639px) {
+  .btn-primary,
+  .btn-ghost {
+    width: 100%;
+    min-height: 3rem;
   }
 }
 

@@ -86,11 +86,11 @@ export default function Home() {
               </ScrollReveal>
 
               <ScrollReveal direction="up" delay={140} className="flex flex-col sm:flex-row gap-3 mb-6 sm:mb-8">
-                <Link to="/contact" className="btn-primary">
+                <Link to="/contact" className="btn-primary w-full sm:w-auto justify-center">
                   Let&apos;s work together
                   <ArrowRight size={15} />
                 </Link>
-                <Link to="/projects" className="btn-ghost">
+                <Link to="/projects" className="btn-ghost w-full sm:w-auto justify-center">
                   View my work
                 </Link>
               </ScrollReveal>
