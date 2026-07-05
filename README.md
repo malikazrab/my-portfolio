@@ -44,6 +44,14 @@ npm run build
 - Swap the avatar initials with a real image in `Home.jsx` and `About.jsx`
 - Wire up the contact form to your backend, Formspree, or EmailJS
 
+## Resume Downloads
+- The CV download section uses `public/Hafiz-Azrab-CV.pdf`
+- The private tracking endpoints expect these environment variables on the host:
+  - `ADMIN_DOWNLOADS_TOKEN`
+  - `UPSTASH_REDIS_REST_URL`
+  - `UPSTASH_REDIS_REST_TOKEN`
+- View the private log at `/admin/downloads` after entering the admin token
+
 ## Contact
 - Email: malikazrab2007@gmail.com
 - GitHub: https://github.com/malikazrab

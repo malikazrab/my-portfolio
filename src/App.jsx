@@ -11,6 +11,7 @@ const Projects = lazy(() => import("./pages/Projects"));
 const Skills = lazy(() => import("./pages/Skills"));
 const Experience = lazy(() => import("./pages/Experience"));
 const Contact = lazy(() => import("./pages/Contact"));
+const AdminDownloads = lazy(() => import("./pages/AdminDownloads"));
 
 export const ThemeContext = createContext();
 
@@ -63,6 +64,7 @@ function AppRoutes() {
       <Route path="/skills" element={<Skills />} />
       <Route path="/experience" element={<Experience />} />
       <Route path="/contact" element={<Contact />} />
+      <Route path="/admin/downloads" element={<AdminDownloads />} />
     </Routes>
   );
 }

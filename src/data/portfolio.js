@@ -10,6 +10,7 @@ export const personal = {
   phone: "+92 (324) 2349720",
   emailHref: "mailto:malikazrab2007@gmail.com",
   phoneHref: "tel:+923242349720",
+  resumeUrl: "/Hafiz-Azrab-CV.pdf",
   github: "malikazrab",
   githubUrl: "https://github.com/malikazrab",
   linkedin: "hafiz-azrab-399363391",

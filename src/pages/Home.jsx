@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Code2, Database, Github, Linkedin, Mail, Phone, Smartphone, Sparkles } from "lucide-react";
 import { personal, projects } from "../data/portfolio";
 import ProjectCard from "../components/ProjectCard";
 import InteractivePanel from "../components/InteractivePanel";
 import ScrollReveal from "../components/ScrollReveal";
+import ProfileLightbox from "../components/ProfileLightbox";
+import ResumeDownloadSection from "../components/ResumeDownloadSection";
 
 const heroSkillItems = [
   { label: "Laravel / PHP", pct: 95 },
@@ -52,6 +54,7 @@ function StatTile({ value, label }) {
 
 export default function Home() {
   const featured = projects.filter((project) => project.featured);
+  const [photoOpen, setPhotoOpen] = useState(false);
 
   return (
     <main className="page-shell">
@@ -130,16 +133,22 @@ export default function Home() {
                     <h2 className="font-display font-semibold text-xl sm:text-2xl text-white mt-1">{personal.name}</h2>
                     <p className="text-sm text-cyan-200/90 mt-1">{personal.title}</p>
                   </div>
-                  <div className="order-1 sm:order-2 w-20 h-20 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border border-white/15 shadow-lg shadow-cyan-500/20">
+                  <button
+                    type="button"
+                    onClick={() => setPhotoOpen(true)}
+                    className="order-1 sm:order-2 group relative w-20 h-20 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border border-white/15 shadow-lg shadow-cyan-500/20 motion-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
+                    aria-label="Open full-resolution profile photo"
+                  >
                     <img
                       src={personal.photo}
                       alt={personal.photoAlt}
-                      className="w-full h-full object-cover object-top"
+                      className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                       loading="eager"
                       fetchPriority="high"
                       decoding="async"
                     />
-                  </div>
+                    <span className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent opacity-60" />
+                  </button>
                 </div>
 
                 <div className="space-y-3 sm:space-y-4 mb-5 sm:mb-6">
@@ -178,6 +187,12 @@ export default function Home() {
               </ScrollReveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto">
+          <ResumeDownloadSection />
         </div>
       </section>
 
@@ -246,6 +261,12 @@ export default function Home() {
           </ScrollReveal>
         </div>
       </section>
+      <ProfileLightbox
+        open={photoOpen}
+        onClose={() => setPhotoOpen(false)}
+        src={personal.photo}
+        alt={personal.photoAlt}
+      />
     </main>
   );
 }

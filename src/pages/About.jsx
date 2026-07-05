@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Award, BookOpen, Code2, Coffee, Github, Heart, Linkedin, Mail, MapPin, Phone } from "lucide-react";
 import SectionHeader from "../components/SectionHeader";
 import InteractivePanel from "../components/InteractivePanel";
 import ScrollReveal from "../components/ScrollReveal";
+import ProfileLightbox from "../components/ProfileLightbox";
 import { certifications, education, personal } from "../data/portfolio";
 
 export default function About() {
+  const [photoOpen, setPhotoOpen] = useState(false);
+
   return (
     <main className="page-shell page-section pt-28">
       <div className="container-tight">
@@ -20,15 +23,21 @@ export default function About() {
           <div className="lg:col-span-2 space-y-5">
             <ScrollReveal direction="up">
               <InteractivePanel className="glass-card spotlight-card rounded-3xl p-6 sm:p-7 text-center h-full" innerClassName="relative z-10">
-                <div className="w-28 h-28 rounded-2xl overflow-hidden border border-white/15 mx-auto mb-5 shadow-2xl shadow-cyan-500/25">
+                <button
+                  type="button"
+                  onClick={() => setPhotoOpen(true)}
+                  className="group relative w-28 h-28 rounded-2xl overflow-hidden border border-white/15 mx-auto mb-5 shadow-2xl shadow-cyan-500/25 motion-border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300"
+                  aria-label="Open full-resolution profile photo"
+                >
                   <img
                     src={personal.photo}
                     alt={personal.photoAlt}
-                    className="w-full h-full object-cover object-top"
+                    className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                     loading="lazy"
                     decoding="async"
                   />
-                </div>
+                  <span className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent opacity-60" />
+                </button>
                 <h2 className="font-display font-semibold text-2xl text-slate-900 dark:text-white mb-1">{personal.name}</h2>
                 <p className="text-cyan-300 font-mono text-sm mb-5">{personal.title}</p>
 
@@ -171,8 +180,14 @@ export default function About() {
               </Link>
             </ScrollReveal>
           </div>
+          </div>
         </div>
-      </div>
+      <ProfileLightbox
+        open={photoOpen}
+        onClose={() => setPhotoOpen(false)}
+        src={personal.photo}
+        alt={personal.photoAlt}
+      />
     </main>
   );
 }
