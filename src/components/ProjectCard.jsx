@@ -24,7 +24,7 @@ function ProjectCard({ project, index }) {
       duration={420}
     >
       <InteractivePanel
-        className="group relative glass-card spotlight-card rounded-2xl overflow-hidden project-card motion-sheen h-full"
+        className="group relative glass-card spotlight-card rounded-2xl overflow-hidden project-card motion-sheen motion-border h-full"
         innerClassName="relative z-10"
       >
         <div className="h-1.5 w-full brand-gradient" />

@@ -2,10 +2,10 @@ import React, { memo, useEffect, useMemo, useRef, useState } from "react";
 import { shouldUseLiteMode } from "../utils/performance";
 
 const directionOffsets = {
-  up: "translate3d(0, 18px, 0)",
-  down: "translate3d(0, -18px, 0)",
-  left: "translate3d(18px, 0, 0)",
-  right: "translate3d(-18px, 0, 0)",
+  up: "translate3d(0, 18px, 0) scale(0.985)",
+  down: "translate3d(0, -18px, 0) scale(0.985)",
+  left: "translate3d(18px, 0, 0) scale(0.985)",
+  right: "translate3d(-18px, 0, 0) scale(0.985)",
 };
 
 function ScrollReveal({
@@ -49,7 +49,7 @@ function ScrollReveal({
   const transitionStyle = useMemo(
     () => ({
       opacity: visible ? 1 : 0,
-      transform: visible ? "translate3d(0, 0, 0)" : directionOffsets[direction] || directionOffsets.up,
+      transform: visible ? "translate3d(0, 0, 0) scale(1)" : directionOffsets[direction] || directionOffsets.up,
       transitionProperty: "opacity, transform",
       transitionDuration: liteMode ? "1ms" : `${duration}ms`,
       transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",

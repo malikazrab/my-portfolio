@@ -209,7 +209,42 @@
   }
 
   .page-shell {
+    position: relative;
+    isolation: isolate;
+    z-index: 0;
     animation: page-enter 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .page-shell::before,
+  .page-shell::after {
+    content: "";
+    position: fixed;
+    inset: -12%;
+    pointer-events: none;
+    z-index: -2;
+    will-change: transform, opacity;
+  }
+
+  .page-shell::before {
+    background:
+      radial-gradient(circle at 12% 18%, rgba(34, 211, 238, 0.16), transparent 22%),
+      radial-gradient(circle at 86% 14%, rgba(99, 102, 241, 0.14), transparent 24%),
+      radial-gradient(circle at 50% 82%, rgba(20, 184, 166, 0.1), transparent 28%);
+    filter: blur(18px);
+    opacity: 0.9;
+    animation: aurora-drift 24s ease-in-out infinite alternate;
+  }
+
+  .page-shell::after {
+    z-index: -1;
+    inset: 0;
+    opacity: 0.16;
+    background-image:
+      linear-gradient(90deg, rgba(103, 232, 249, 0.08) 1px, transparent 1px),
+      linear-gradient(rgba(103, 232, 249, 0.05) 1px, transparent 1px);
+    background-size: 92px 92px, 92px 92px;
+    background-position: 0 0, 0 0;
+    animation: grid-drift 28s linear infinite;
   }
 
   html[data-performance="lite"] .page-shell,
@@ -244,6 +279,92 @@
     pointer-events: none;
     background: radial-gradient(circle at top, rgba(255, 255, 255, 0.16), transparent 32%);
     opacity: 0.9;
+  }
+
+  .hero-stage {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .hero-stage::before,
+  .hero-stage::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .hero-stage::before {
+    inset: -6%;
+    border-radius: 2rem;
+    background:
+      radial-gradient(circle at 18% 18%, rgba(34, 211, 238, 0.2), transparent 24%),
+      radial-gradient(circle at 84% 14%, rgba(99, 102, 241, 0.16), transparent 26%),
+      radial-gradient(circle at 56% 88%, rgba(20, 184, 166, 0.12), transparent 28%);
+    filter: blur(16px);
+    opacity: 0.92;
+    z-index: -2;
+    animation: aurora-drift 18s ease-in-out infinite alternate;
+  }
+
+  .hero-stage::after {
+    inset: 0;
+    border-radius: inherit;
+    z-index: -1;
+    opacity: 0.12;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mix-blend-mode: screen;
+    animation: grid-drift 24s linear infinite;
+  }
+
+  .hero-orb {
+    position: absolute;
+    border-radius: 9999px;
+    pointer-events: none;
+    background: radial-gradient(circle, rgba(103, 232, 249, 0.3) 0%, rgba(103, 232, 249, 0.1) 38%, transparent 72%);
+    filter: blur(10px);
+    opacity: 0.9;
+    animation: orb-float 11s ease-in-out infinite;
+  }
+
+  .hero-orb--alt {
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.28) 0%, rgba(99, 102, 241, 0.12) 40%, transparent 74%);
+    animation-duration: 15s;
+    animation-direction: reverse;
+  }
+
+  .hero-ribbon {
+    position: absolute;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    pointer-events: none;
+    background: linear-gradient(90deg, transparent, rgba(103, 232, 249, 0.85), rgba(99, 102, 241, 0.85), transparent);
+    opacity: 0.6;
+    animation: ribbon-flow 8s linear infinite;
+  }
+
+  .motion-border {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .motion-border::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: linear-gradient(120deg, transparent 18%, rgba(255, 255, 255, 0.24) 50%, transparent 82%);
+    transform: translateX(-120%);
+    opacity: 0;
+  }
+
+  .motion-border:hover::after {
+    animation: sheen-slide 1500ms ease forwards;
+    opacity: 1;
   }
 
   .brand-gradient {
@@ -355,6 +476,31 @@
     backface-visibility: hidden;
   }
 
+  .hero-panel {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-panel::before,
+  .hero-panel::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .hero-panel::before {
+    background: linear-gradient(135deg, rgba(103, 232, 249, 0.12), transparent 36%, rgba(99, 102, 241, 0.12));
+    opacity: 0.9;
+  }
+
+  .hero-panel::after {
+    inset: 1px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 36%, rgba(255, 255, 255, 0.04));
+    opacity: 0.4;
+  }
+
   .premium-ring {
     box-shadow: 0 10px 30px rgba(2, 6, 23, 0.16), 0 0 0 1px rgba(255, 255, 255, 0.12);
   }
@@ -374,9 +520,11 @@
     position: absolute;
     left: 0;
     bottom: -0.8rem;
-    width: 4rem;
+    width: 5rem;
     height: 1px;
-    background: linear-gradient(90deg, rgba(103, 232, 249, 0.75), transparent);
+    background: linear-gradient(90deg, rgba(103, 232, 249, 0.85), rgba(99, 102, 241, 0.5), transparent);
+    background-size: 200% 100%;
+    animation: section-underline 5.5s ease-in-out infinite;
   }
 
   .grid-pattern {
@@ -588,6 +736,38 @@
     visibility: visible;
     transform: none;
   }
+
+  .page-shell::before {
+    inset: -6%;
+    filter: blur(14px);
+    opacity: 0.84;
+    animation-duration: 18s;
+  }
+
+  .page-shell::after {
+    opacity: 0.12;
+    animation-duration: 18s;
+  }
+
+  .hero-stage::before {
+    inset: -10%;
+    filter: blur(14px);
+    animation-duration: 14s;
+  }
+
+  .hero-stage::after {
+    background-size: 52px 52px;
+    animation-duration: 18s;
+  }
+
+  .hero-orb {
+    filter: blur(8px);
+    animation-duration: 9s;
+  }
+
+  .hero-orb--alt {
+    animation-duration: 12s;
+  }
 }
 
 @media (max-width: 639px) {
@@ -643,6 +823,33 @@
   0% { transform: translateX(-120%); opacity: 0; }
   15% { opacity: 0.9; }
   100% { transform: translateX(120%); opacity: 0; }
+}
+
+@keyframes ribbon-flow {
+  0% { transform: translate3d(-8%, 0, 0); opacity: 0.35; }
+  50% { opacity: 0.8; }
+  100% { transform: translate3d(8%, 0, 0); opacity: 0.35; }
+}
+
+@keyframes aurora-drift {
+  0% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.78; }
+  50% { transform: translate3d(1.5%, -1.5%, 0) scale(1.04); opacity: 0.94; }
+  100% { transform: translate3d(-1.5%, 1%, 0) scale(1.02); opacity: 0.82; }
+}
+
+@keyframes grid-drift {
+  0% { background-position: 0 0, 0 0; }
+  100% { background-position: 92px 92px, -92px 92px; }
+}
+
+@keyframes orb-float {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(0, -12px, 0) scale(1.06); }
+}
+
+@keyframes section-underline {
+  0%, 100% { background-position: 0% 50%; transform: scaleX(0.94); opacity: 0.7; }
+  50% { background-position: 100% 50%; transform: scaleX(1); opacity: 1; }
 }
 
 @keyframes bar-grow {

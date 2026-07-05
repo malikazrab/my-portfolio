@@ -55,8 +55,15 @@ export default function Home() {
 
   return (
     <main className="page-shell">
-      <section className="relative min-h-[calc(100svh-4rem)] flex items-start sm:items-center pt-24 sm:pt-20 pb-10 sm:pb-0 noise-bg">
+      <section className="hero-stage relative min-h-[calc(100svh-4rem)] flex items-start sm:items-center pt-24 sm:pt-20 pb-10 sm:pb-0 noise-bg">
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-300/40 to-transparent" />
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <span className="hero-orb left-[4%] top-[12%] h-28 w-28 sm:h-40 sm:w-40" />
+          <span className="hero-orb hero-orb--alt right-[8%] top-[18%] h-24 w-24 sm:h-36 sm:w-36" />
+          <span className="hero-orb left-[52%] bottom-[10%] h-20 w-20 sm:h-28 sm:w-28 opacity-70" />
+          <span className="hero-ribbon top-[22%] sm:top-[18%]" />
+          <span className="hero-ribbon bottom-[14%] sm:bottom-[16%] opacity-40" />
+        </div>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-20 w-full relative z-10">
           <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-8 sm:gap-10 lg:gap-16 items-start sm:items-center">
             <div className="pt-2 sm:pt-0">
@@ -116,7 +123,7 @@ export default function Home() {
             </div>
 
             <ScrollReveal direction="up" delay={120} className="mt-2 sm:mt-0">
-              <InteractivePanel className="glass-card spotlight-card rounded-[1.75rem] p-5 sm:p-8 hero-float motion-sheen" innerClassName="relative z-10">
+              <InteractivePanel className="glass-card spotlight-card hero-panel rounded-[1.75rem] p-5 sm:p-8 hero-float motion-sheen" innerClassName="relative z-10">
                 <div className="flex flex-col sm:flex-row items-center sm:items-start justify-between gap-4 mb-6 text-center sm:text-left">
                   <div className="order-2 sm:order-1">
                     <p className="text-xs font-mono text-cyan-200/80">Profile</p>
@@ -165,8 +172,10 @@ export default function Home() {
       <section className="py-12 border-y border-white/10 bg-white/5">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-8">
-            {homeStats.map((stat) => (
-              <StatTile key={stat.label} value={stat.target} label={stat.label} />
+            {homeStats.map((stat, index) => (
+              <ScrollReveal key={stat.label} direction="up" delay={index * 80} duration={520}>
+                <StatTile value={stat.target} label={stat.label} />
+              </ScrollReveal>
             ))}
           </div>
         </div>
@@ -200,8 +209,8 @@ export default function Home() {
           </ScrollReveal>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {homeServices.map((service) => (
-              <ScrollReveal key={service.title} direction="up">
+            {homeServices.map((service, index) => (
+              <ScrollReveal key={service.title} direction="up" delay={index * 90}>
                 <InteractivePanel className="glass-card spotlight-card rounded-2xl p-6 h-full motion-sheen" innerClassName="relative z-10">
                   <div className="w-11 h-11 rounded-xl bg-white/10 border border-white/10 flex items-center justify-center text-cyan-300 mb-5">
                     {service.icon}
