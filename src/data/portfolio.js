@@ -1,4 +1,4 @@
-import profilePhoto from "../assets/profile.png";
+import profilePhoto from "../assets/profile.jpeg";
 
 export const personal = {
   name: "Hafiz Azrab Karamat",
