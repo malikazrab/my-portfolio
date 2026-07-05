@@ -85,7 +85,7 @@ export default function Home() {
                 </p>
               </ScrollReveal>
 
-              <ScrollReveal direction="up" delay={140} className="flex flex-col sm:flex-row gap-3 mb-6 sm:mb-8">
+              <div className="hero-cta-row flex flex-col sm:flex-row gap-3 mb-6 sm:mb-8">
                 <Link to="/contact" className="btn-primary w-full sm:w-auto justify-center">
                   Let&apos;s work together
                   <ArrowRight size={15} />
@@ -93,9 +93,9 @@ export default function Home() {
                 <Link to="/projects" className="btn-ghost w-full sm:w-auto justify-center">
                   View my work
                 </Link>
-              </ScrollReveal>
+              </div>
 
-              <ScrollReveal direction="up" delay={170} className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
+              <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
                 <a href={personal.githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 hover:text-cyan-400 transition-colors">
                   <Github size={15} />
                   {personal.githubDisplay}
@@ -112,7 +112,7 @@ export default function Home() {
                   <Phone size={15} />
                   {personal.phone}
                 </a>
-              </ScrollReveal>
+              </div>
             </div>
 
             <ScrollReveal direction="up" delay={120} className="mt-2 sm:mt-0">
