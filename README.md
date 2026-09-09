@@ -1,12 +1,11 @@
 # Hafiz Azrab Karamat - Portfolio
 
-Personal portfolio website built with React, Tailwind CSS, and Framer Motion.
+Personal portfolio website built with React and Tailwind CSS.
 
 ## Stack
 - React 18
 - React Router v6
 - Tailwind CSS v3
-- Framer Motion v11
 - Lucide React (icons)
 
 ## Local Development

@@ -140,7 +140,7 @@ export default function AdminDownloads() {
 
           <InteractivePanel className="glass-card spotlight-card rounded-[1.75rem] p-0 overflow-hidden" innerClassName="relative z-10">
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm">
+              <table className="min-w-[48rem] w-full text-left text-sm">
                 <thead className="bg-white/5 text-xs uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
                   <tr>
                     <th className="px-5 py-4">Time</th>

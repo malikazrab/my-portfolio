@@ -7,7 +7,7 @@ function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-white/10 bg-white/5 backdrop-blur-xl">
+    <footer className="border-t border-white/10 bg-white/5">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-10">
           <div>
@@ -46,7 +46,7 @@ function Footer() {
             <h4 className="font-display font-semibold text-sm text-slate-900 dark:text-white mb-4">Get in Touch</h4>
             <ul className="space-y-2.5">
               <li>
-                <a href={personal.emailHref} className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-200 transition-colors motion-sheen">
+                <a href={personal.emailHref} className="flex min-w-0 items-center gap-2 break-all text-sm text-slate-600 transition-colors motion-sheen dark:text-slate-300 hover:text-cyan-600 dark:hover:text-cyan-200">
                   <Mail size={13} />
                   {personal.email}
                 </a>

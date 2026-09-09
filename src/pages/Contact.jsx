@@ -82,7 +82,7 @@ export default function Contact() {
 
             <ScrollReveal direction="up" className="glass-card spotlight-card rounded-xl p-5">
               <div className="flex items-center gap-2 mb-2">
-                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                <span className="w-2 h-2 rounded-full bg-green-500" />
                 <span className="font-display font-semibold text-sm text-slate-900 dark:text-white">Currently Available</span>
               </div>
               <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">

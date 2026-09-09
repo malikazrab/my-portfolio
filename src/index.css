@@ -31,6 +31,20 @@
       radial-gradient(circle at bottom right, rgba(99, 102, 241, 0.08), transparent 26%),
       linear-gradient(180deg, var(--bg-dark) 0%, #020817 55%, var(--bg-dark) 100%);
     color: #e2e8f0;
+    overscroll-behavior-x: none;
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+  }
+
+  button,
+  a,
+  input,
+  select,
+  textarea {
+    touch-action: manipulation;
   }
 
   html[data-theme="light"] {
@@ -88,9 +102,11 @@
   .liquid-chip,
   .nav-shell {
     @apply border border-white/10;
-    background: rgba(8, 13, 24, 0.62);
-    backdrop-filter: blur(14px) saturate(150%);
-    -webkit-backdrop-filter: blur(14px) saturate(150%);
+    /* Backdrop blur forces expensive repaints while scrolling, especially when
+       several cards are visible. An opaque surface keeps the same hierarchy. */
+    background: rgba(8, 13, 24, 0.82);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
     box-shadow: 0 10px 30px rgba(2, 6, 23, 0.22);
   }
 
@@ -106,8 +122,6 @@
 
   .glass-card {
     @apply transition-[background-color,border-color,box-shadow,transform] duration-200;
-    content-visibility: auto;
-    contain-intrinsic-size: 1px 320px;
   }
 
   .panel-hover {
@@ -123,8 +137,6 @@
     min-height: 100%;
     display: flex;
     flex-direction: column;
-    content-visibility: auto;
-    contain-intrinsic-size: 1px 420px;
   }
 
   .project-card,
@@ -212,7 +224,7 @@
     position: relative;
     isolation: isolate;
     z-index: 0;
-    animation: page-enter 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation: none;
   }
 
   .page-shell::before,
@@ -222,7 +234,7 @@
     inset: -12%;
     pointer-events: none;
     z-index: -2;
-    will-change: transform, opacity;
+    will-change: auto;
   }
 
   .page-shell::before {
@@ -230,9 +242,9 @@
       radial-gradient(circle at 12% 18%, rgba(34, 211, 238, 0.16), transparent 22%),
       radial-gradient(circle at 86% 14%, rgba(99, 102, 241, 0.14), transparent 24%),
       radial-gradient(circle at 50% 82%, rgba(20, 184, 166, 0.1), transparent 28%);
-    filter: blur(18px);
-    opacity: 0.9;
-    animation: aurora-drift 24s ease-in-out infinite alternate;
+    filter: none;
+    opacity: 0.62;
+    animation: none;
   }
 
   .page-shell::after {
@@ -244,7 +256,7 @@
       linear-gradient(rgba(103, 232, 249, 0.05) 1px, transparent 1px);
     background-size: 92px 92px, 92px 92px;
     background-position: 0 0, 0 0;
-    animation: grid-drift 28s linear infinite;
+    animation: none;
   }
 
   html[data-performance="lite"] .page-shell,
@@ -253,12 +265,7 @@
   }
 
   .page-shell > * {
-    animation: page-content 1100ms cubic-bezier(0.16, 1, 0.3, 1) both;
-  }
-
-  .page-shell > section:not(:first-child) {
-    content-visibility: auto;
-    contain-intrinsic-size: 1px 900px;
+    animation: none;
   }
 
   .page-shell > *:nth-child(2) { animation-delay: 120ms; }
@@ -300,10 +307,10 @@
       radial-gradient(circle at 18% 18%, rgba(34, 211, 238, 0.2), transparent 24%),
       radial-gradient(circle at 84% 14%, rgba(99, 102, 241, 0.16), transparent 26%),
       radial-gradient(circle at 56% 88%, rgba(20, 184, 166, 0.12), transparent 28%);
-    filter: blur(16px);
-    opacity: 0.92;
+    filter: none;
+    opacity: 0.64;
     z-index: -2;
-    animation: aurora-drift 18s ease-in-out infinite alternate;
+    animation: none;
   }
 
   .hero-stage::after {
@@ -315,8 +322,8 @@
       linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
       linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
     background-size: 44px 44px;
-    mix-blend-mode: screen;
-    animation: grid-drift 24s linear infinite;
+    mix-blend-mode: normal;
+    animation: none;
   }
 
   .hero-orb {
@@ -324,9 +331,9 @@
     border-radius: 9999px;
     pointer-events: none;
     background: radial-gradient(circle, rgba(103, 232, 249, 0.3) 0%, rgba(103, 232, 249, 0.1) 38%, transparent 72%);
-    filter: blur(10px);
+    filter: none;
     opacity: 0.9;
-    animation: orb-float 11s ease-in-out infinite;
+    animation: none;
   }
 
   .hero-orb--alt {
@@ -343,7 +350,7 @@
     pointer-events: none;
     background: linear-gradient(90deg, transparent, rgba(103, 232, 249, 0.85), rgba(99, 102, 241, 0.85), transparent);
     opacity: 0.6;
-    animation: ribbon-flow 8s linear infinite;
+    animation: none;
   }
 
   .motion-border {
@@ -524,7 +531,7 @@
     height: 1px;
     background: linear-gradient(90deg, rgba(103, 232, 249, 0.85), rgba(99, 102, 241, 0.5), transparent);
     background-size: 200% 100%;
-    animation: section-underline 5.5s ease-in-out infinite;
+    animation: none;
   }
 
   .grid-pattern {
@@ -583,32 +590,32 @@
   }
 
   .mobile-motion {
-    animation: mobile-pulse 6s ease-in-out infinite;
+    animation: none;
   }
 
   .mobile-motion-soft {
-    animation: mobile-rise 8s ease-in-out infinite;
+    animation: none;
   }
 
   .float-slow {
-    animation: float-slow 8s ease-in-out infinite;
+    animation: none;
   }
 
   .float-medium {
-    animation: float-medium 7s ease-in-out infinite;
+    animation: none;
   }
 
   .float-fast {
-    animation: float-fast 6s ease-in-out infinite;
+    animation: float-fast 7s ease-in-out infinite;
   }
 
   .pulse-soft {
-    animation: pulse-soft 3.5s ease-in-out infinite;
+    animation: pulse-soft 4.5s ease-in-out infinite;
   }
 
   .bar-fill {
     transform-origin: left center;
-    animation: bar-grow 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation: bar-grow 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 
   .stagger-1 { animation-delay: 80ms; }
@@ -687,37 +694,22 @@
     transform: none;
   }
 
+  /* Static touch UI: iOS otherwise continuously composites these large layers. */
+  .page-shell,
+  .page-shell::before,
+  .page-shell::after,
+  .page-shell > *,
+  .hero-stage::before,
+  .hero-stage::after,
+  .hero-orb,
+  .hero-ribbon,
   .mobile-motion,
   .mobile-motion-soft,
   .float-slow,
   .float-medium,
   .float-fast,
-  .pulse-soft {
-    animation-duration: 3.5s;
-  }
-
-  .page-shell {
-    animation: page-enter-mobile 1050ms cubic-bezier(0.16, 1, 0.3, 1) both;
-  }
-
-  .page-shell::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    background:
-      radial-gradient(circle at 10% 15%, rgba(34, 211, 238, 0.12), transparent 18%),
-      radial-gradient(circle at 85% 12%, rgba(99, 102, 241, 0.12), transparent 20%),
-      radial-gradient(circle at 50% 85%, rgba(20, 184, 166, 0.08), transparent 20%);
-    animation: mobile-breathe 9s ease-in-out infinite;
-    opacity: 0.9;
-    z-index: -1;
-  }
-
-  .page-shell > * {
-    animation-duration: 1250ms;
-  }
-
+  .pulse-soft,
+  .bar-fill,
   .glass-card,
   .project-card,
   .icon-btn,
@@ -726,55 +718,42 @@
   .section-tag,
   .skill-pill,
   .chip {
-    animation: mobile-surface 7.5s ease-in-out infinite;
-  }
-
-  .btn-primary,
-  .btn-ghost {
     animation: none;
-    opacity: 1;
-    visibility: visible;
-    transform: none;
   }
 
-  .page-shell::before {
-    inset: -6%;
-    filter: blur(14px);
-    opacity: 0.84;
-    animation-duration: 18s;
-  }
-
-  .page-shell::after {
-    opacity: 0.12;
-    animation-duration: 18s;
-  }
-
-  .hero-stage::before {
-    inset: -10%;
-    filter: blur(14px);
-    animation-duration: 14s;
-  }
-
-  .hero-stage::after {
-    background-size: 52px 52px;
-    animation-duration: 18s;
-  }
-
+  .page-shell::before,
+  .hero-stage::before,
   .hero-orb {
-    filter: blur(8px);
-    animation-duration: 9s;
+    filter: none;
   }
 
-  .hero-orb--alt {
-    animation-duration: 12s;
+  .glass,
+  .glass-card,
+  .liquid-glass,
+  .liquid-chip,
+  .nav-shell {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 }
 
 @media (max-width: 639px) {
+  /* Prevent iOS Safari from zooming into a field with a 14px Tailwind font. */
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+
   .btn-primary,
   .btn-ghost {
     width: 100%;
     min-height: 3rem;
+  }
+
+  .page-section {
+    padding-top: 6.5rem;
+    padding-bottom: 3.5rem;
   }
 }
 

@@ -20,4 +20,6 @@ export const shouldReduceMotion = () =>
   prefersReducedMotion() || prefersReducedData() || isLowMemoryDevice();
 
 export const shouldUseLiteMode = () =>
-  shouldReduceMotion();
+  // Touch devices do not benefit from hover effects, while continuously composited
+  // blur/gradient animations can keep their GPU busy (and drain battery).
+  shouldReduceMotion() || isTouchInput();

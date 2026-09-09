@@ -58,14 +58,22 @@ function Navbar() {
       return undefined;
     }
 
-    const onScroll = () => {
+    let frameId = null;
+    const updateScrolled = () => {
+      frameId = null;
       const nextScrolled = window.scrollY > 20;
       setScrolled((prev) => (prev === nextScrolled ? prev : nextScrolled));
     };
+    const onScroll = () => {
+      if (frameId === null) frameId = window.requestAnimationFrame(updateScrolled);
+    };
 
-    onScroll();
+    updateScrolled();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (frameId !== null) window.cancelAnimationFrame(frameId);
+    };
   }, [liteMode]);
 
   useEffect(() => {

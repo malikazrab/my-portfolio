@@ -105,7 +105,7 @@ export default function Experience() {
           <div className="absolute inset-0 grid-pattern opacity-20" />
           <div className="relative z-10">
             <div className="inline-flex items-center gap-2 mb-4 px-3 py-1 rounded-full bg-white/15 text-sm font-mono">
-              <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
+              <span className="w-2 h-2 rounded-full bg-white" />
               Currently available
             </div>
             <h3 className="font-display font-semibold text-2xl mb-3">Open to new opportunities</h3>
