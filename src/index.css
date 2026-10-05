@@ -694,7 +694,7 @@
     transform: none;
   }
 
-  /* Static touch UI: iOS otherwise continuously composites these large layers. */
+  /* Keep ambient loops off on touch; the mobile entrance effects below are one-shot. */
   .page-shell,
   .page-shell::before,
   .page-shell::after,
@@ -704,21 +704,33 @@
   .hero-orb,
   .hero-ribbon,
   .mobile-motion,
-  .mobile-motion-soft,
   .float-slow,
   .float-medium,
   .float-fast,
   .pulse-soft,
-  .bar-fill,
   .glass-card,
   .project-card,
   .icon-btn,
   .nav-link,
-  .nav-drawer-link,
-  .section-tag,
   .skill-pill,
   .chip {
     animation: none;
+  }
+
+  .mobile-motion-soft {
+    animation: mobile-surface-in 680ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .bar-fill {
+    animation: bar-grow 760ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .section-tag {
+    animation: mobile-accent-in 620ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .nav-drawer-link {
+    animation: drawer-item 460ms cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 
   .page-shell::before,
@@ -738,6 +750,14 @@
 }
 
 @media (max-width: 767px) {
+  html[data-motion="full"][data-performance="lite"] .mobile-motion-soft {
+    animation: mobile-surface-in 680ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  html[data-motion="full"][data-performance="lite"] .bar-fill {
+    animation: bar-grow 760ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
   .hero-stage {
     min-height: auto;
     padding-top: 5.5rem;
@@ -801,12 +821,6 @@
   .hero-stage .flex-wrap a {
     width: 100%;
     justify-content: center;
-  }
-
-  .hero-panel,
-  .glass-card,
-  .project-card {
-    transform: none !important;
   }
 
   .glass-card,
@@ -982,5 +996,27 @@
   }
   50% {
     transform: translate3d(0, -3px, 0);
+  }
+}
+
+@keyframes mobile-surface-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 16px, 0) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes mobile-accent-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
   }
 }

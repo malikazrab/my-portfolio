@@ -67,7 +67,7 @@ export default function Contact() {
           center
         />
 
-        <div className="grid lg:grid-cols-5 gap-10 lg:gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-16">
           <div className="lg:col-span-2 space-y-5">
             <ContactCard icon={<Mail size={16} />} label="Email" value={personal.email} href={personal.emailHref} />
             <ContactCard icon={<Phone size={16} />} label="Phone" value={personal.phone} href={personal.phoneHref} />
