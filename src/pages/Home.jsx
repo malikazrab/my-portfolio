@@ -61,9 +61,9 @@ export default function Home() {
       <section className="hero-stage relative min-h-[calc(100svh-4rem)] flex items-start sm:items-center pt-24 sm:pt-20 pb-10 sm:pb-0 noise-bg">
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-300/40 to-transparent" />
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <span className="hero-orb left-[4%] top-[12%] h-28 w-28 sm:h-40 sm:w-40" />
-          <span className="hero-orb hero-orb--alt right-[8%] top-[18%] h-24 w-24 sm:h-36 sm:w-36" />
-          <span className="hero-orb left-[52%] bottom-[10%] h-20 w-20 sm:h-28 sm:w-28 opacity-70" />
+          <span className="hero-orb float-slow left-[4%] top-[12%] h-28 w-28 sm:h-40 sm:w-40" />
+          <span className="hero-orb hero-orb--alt float-medium right-[8%] top-[18%] h-24 w-24 sm:h-36 sm:w-36" />
+          <span className="hero-orb float-fast left-[52%] bottom-[10%] h-20 w-20 sm:h-28 sm:w-28 opacity-70" />
           <span className="hero-ribbon top-[22%] sm:top-[18%]" />
           <span className="hero-ribbon bottom-[14%] sm:bottom-[16%] opacity-40" />
         </div>
@@ -126,7 +126,7 @@ export default function Home() {
             </div>
 
             <ScrollReveal direction="up" delay={120} className="mt-2 sm:mt-0">
-              <InteractivePanel className="glass-card spotlight-card hero-panel rounded-[1.75rem] p-5 sm:p-8 hero-float motion-sheen" innerClassName="relative z-10">
+              <InteractivePanel className="glass-card spotlight-card hero-panel rounded-[1.75rem] p-5 sm:p-8 hero-float motion-sheen mobile-motion-soft" innerClassName="relative z-10">
                 <div className="flex flex-col sm:flex-row items-center sm:items-start justify-between gap-4 mb-6 text-center sm:text-left">
                   <div className="order-2 sm:order-1">
                     <p className="text-xs font-mono text-cyan-200/80">Profile</p>

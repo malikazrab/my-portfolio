@@ -10,7 +10,7 @@ const ContactCard = memo(function ContactCard({ icon, label, value, href }) {
       href={href}
       target={href.startsWith("http") ? "_blank" : undefined}
       rel="noopener noreferrer"
-      className="glass-card rounded-xl p-5 flex items-center gap-4 hover:border-cyan-300/40 transition-colors"
+      className="glass-card rounded-xl p-5 flex items-center gap-4 hover:border-cyan-300/40 transition-all duration-300 ease-out mobile-motion-soft"
     >
       <div className="w-11 h-11 rounded-xl bg-white/10 border border-white/10 flex items-center justify-center text-cyan-300 shrink-0">
         {icon}

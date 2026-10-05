@@ -93,15 +93,15 @@ function Navbar() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 sm:h-[4.5rem]">
             <Link to="/" className="flex items-center gap-2 group">
-              <div className="w-9 h-9 rounded-xl brand-gradient flex items-center justify-center shadow-lg shadow-cyan-500/20 pulse-soft overflow-hidden border border-white/10">
-                <span className="absolute left-2 top-2 flex gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-white/70" />
-                  <span className="w-1.5 h-1.5 rounded-full bg-white/50" />
-                  <span className="w-1.5 h-1.5 rounded-full bg-white/30" />
-                </span>
-                <span className="font-display text-[13px] font-bold text-white tracking-tight translate-y-[1px]">
-                  &lt;/&gt;
-                </span>
+              <div className="w-9 h-9 rounded-xl shadow-lg shadow-cyan-500/20 pulse-soft overflow-hidden border border-cyan-200/40 bg-slate-800">
+                <img
+                  src={personal.photo}
+                  alt=""
+                  aria-hidden="true"
+                  className="w-full h-full object-cover object-top"
+                  width="36"
+                  height="36"
+                />
               </div>
               <span className="font-display font-bold text-base sm:text-lg tracking-tight text-slate-900 dark:text-white">
                 {personal.name}<span className="text-brand-500">.</span>

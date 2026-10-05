@@ -2,6 +2,7 @@ import React, { createContext, lazy, Suspense, useContext, useEffect, useMemo, u
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import PortfolioLoader from "./components/PortfolioLoader";
 import { shouldUseLiteMode, shouldReduceMotion } from "./utils/performance";
 import "./index.css";
 
@@ -71,6 +72,7 @@ function AppRoutes() {
 
 export default function App() {
   const [dark, setDark] = useState(getInitialTheme);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", dark);
@@ -104,6 +106,7 @@ export default function App() {
           </Suspense>
           <Footer />
         </div>
+        {isLoading && <PortfolioLoader onComplete={() => setIsLoading(false)} />}
       </Router>
     </ThemeContext.Provider>
   );
