@@ -18,13 +18,16 @@ function Navbar() {
   const { dark, setDark } = useTheme();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [routePulse, setRoutePulse] = useState(false);
   const liteMode = shouldUseLiteMode();
   const location = useLocation();
   const menuRef = useRef(null);
+  const lastScrollYRef = useRef(0);
 
   useEffect(() => {
     setOpen(false);
+    setHidden(false);
   }, [location]);
 
   useEffect(() => {
@@ -32,7 +35,6 @@ function Navbar() {
       setRoutePulse(false);
       return undefined;
     }
-
     setRoutePulse(true);
     const timer = window.setTimeout(() => setRoutePulse(false), 360);
     return () => window.clearTimeout(timer);
@@ -61,8 +63,16 @@ function Navbar() {
     let frameId = null;
     const updateScrolled = () => {
       frameId = null;
-      const nextScrolled = window.scrollY > 20;
-      setScrolled((prev) => (prev === nextScrolled ? prev : nextScrolled));
+      const y = window.scrollY;
+      const isPastThreshold = y > 20;
+      setScrolled((prev) => (prev === isPastThreshold ? prev : isPastThreshold));
+      if (y > 80) {
+        // Hide when scrolling down more than 4px, show when scrolling up
+        setHidden(y > lastScrollYRef.current + 4);
+      } else {
+        setHidden(false);
+      }
+      lastScrollYRef.current = y;
     };
     const onScroll = () => {
       if (frameId === null) frameId = window.requestAnimationFrame(updateScrolled);
@@ -77,11 +87,7 @@ function Navbar() {
   }, [liteMode]);
 
   useEffect(() => {
-    if (open) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    document.body.style.overflow = open ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [open]);
 
@@ -89,7 +95,9 @@ function Navbar() {
 
   return (
     <>
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,border-color,box-shadow] duration-200 ${scrolled ? "nav-shell shadow-2xl shadow-black/20" : "bg-transparent"} ${routePulse ? "nav-route-switch" : ""}`}>
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,border-color,box-shadow,transform] duration-300 ease-out ${scrolled ? "nav-shell shadow-2xl shadow-black/20" : "bg-transparent"} ${routePulse ? "nav-route-switch" : ""} ${hidden && !open ? "-translate-y-full" : "translate-y-0"}`}
+      >
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 sm:h-[4.5rem]">
             <Link to="/" className="flex items-center gap-2 group">

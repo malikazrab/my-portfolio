@@ -94,14 +94,14 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-20 w-full relative z-10">
           <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-8 sm:gap-10 lg:gap-16 items-start sm:items-center">
             <div className="pt-2 sm:pt-0">
-              <ScrollReveal direction="up" className="mb-5 sm:mb-6">
-                <span className="section-tag pulse-soft">
+              <ScrollReveal direction="up" className="mb-5 sm:mb-6" blur>
+                <span className="section-tag pulse-soft glow-pulse">
                   <Sparkles size={11} />
                   Available for new projects
                 </span>
               </ScrollReveal>
 
-              <ScrollReveal direction="up" delay={40}>
+              <ScrollReveal direction="up" delay={40} blur>
                 <h1 className="font-display font-semibold text-3xl sm:text-5xl lg:text-6xl leading-[1.06] sm:leading-[1.05] text-slate-900 dark:text-white mb-4 sm:mb-5">
                   Hi, I&apos;m <span className="text-gradient">Hafiz Azrab</span>
                 </h1>

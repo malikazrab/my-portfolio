@@ -18,7 +18,8 @@
 
   html {
     -webkit-tap-highlight-color: transparent;
-    scroll-behavior: auto;
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
     background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-dark-2) 100%);
   }
 
@@ -1022,32 +1023,33 @@
 }
 
 /* ==========================================================================
-   New Motion & Animation Additions
+   Motion & Animation — Performance-First
    ========================================================================== */
 
-/* 1. Scroll Progress Bar (top of viewport) */
+/* 1. Scroll Progress Bar — uses transform:scaleX (compositor-only, no layout) */
 .scroll-progress-bar {
   position: fixed;
   top: 0;
   left: 0;
-  height: 2.5px;
+  height: 3px;
+  width: 100%;
   background: linear-gradient(90deg, #22d3ee 0%, #67e8f9 50%, #6366f1 100%);
   z-index: 9999;
   pointer-events: none;
   transform-origin: left center;
-  box-shadow: 0 0 8px rgba(34, 211, 238, 0.6);
-  transition: width 80ms linear;
+  transform: scaleX(0);
+  box-shadow: 0 0 10px rgba(34, 211, 238, 0.7), 0 0 20px rgba(34, 211, 238, 0.3);
 }
 
 /* 2. Page fade-in on route transition */
 .page-fade-in {
-  animation: page-route-fade 280ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: page-route-fade 320ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 @keyframes page-route-fade {
   from {
     opacity: 0;
-    transform: translate3d(0, 8px, 0);
+    transform: translate3d(0, 16px, 0);
   }
   to {
     opacity: 1;
@@ -1080,6 +1082,7 @@
   background-size: 52px 52px;
   animation: hero-grid-move 28s linear infinite;
   pointer-events: none;
+  will-change: background-position;
 }
 
 @keyframes hero-grid-move {
@@ -1087,7 +1090,215 @@
   100% { background-position: 52px 52px, 52px 52px; }
 }
 
-/* Disable hero grid-drift on low-power / lite mode */
 html[data-performance="lite"] .hero-grid-drift {
   animation: none;
+}
+
+/* 5. Smooth card entrance — scale + fade */
+.card-entrance {
+  animation: card-pop 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes card-pop {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+/* 6. Glow pulse on highlight elements */
+.glow-pulse {
+  animation: glow-breathe 3s ease-in-out infinite;
+}
+
+@keyframes glow-breathe {
+  0%, 100% { box-shadow: 0 0 10px rgba(34, 211, 238, 0.2), 0 0 20px rgba(34, 211, 238, 0.05); }
+  50%       { box-shadow: 0 0 18px rgba(34, 211, 238, 0.45), 0 0 36px rgba(34, 211, 238, 0.15); }
+}
+
+html[data-performance="lite"] .glow-pulse {
+  animation: none;
+}
+
+/* 7. Staggered list reveal — apply to list wrappers */
+.stagger-list > * {
+  opacity: 0;
+  animation: stagger-in 400ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.stagger-list > *:nth-child(1)  { animation-delay: 60ms; }
+.stagger-list > *:nth-child(2)  { animation-delay: 120ms; }
+.stagger-list > *:nth-child(3)  { animation-delay: 180ms; }
+.stagger-list > *:nth-child(4)  { animation-delay: 240ms; }
+.stagger-list > *:nth-child(5)  { animation-delay: 300ms; }
+.stagger-list > *:nth-child(6)  { animation-delay: 360ms; }
+
+@keyframes stagger-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+html[data-performance="lite"] .stagger-list > * {
+  animation: none;
+  opacity: 1;
+}
+
+/* 8. Floating badge with gentle bob */
+.float-badge {
+  animation: badge-bob 6s ease-in-out infinite;
+}
+
+@keyframes badge-bob {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(-1deg); }
+  50%       { transform: translate3d(0, -6px, 0) rotate(1deg); }
+}
+
+html[data-performance="lite"] .float-badge {
+  animation: none;
+}
+
+/* 9. Shimmer loading skeleton */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.04) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.04) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+  border-radius: 6px;
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* 10. Spotlight hover effect on cards — tracks mouse via CSS var */
+.spotlight-hover {
+  position: relative;
+  overflow: hidden;
+}
+
+.spotlight-hover::before {
+  content: "";
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(103, 232, 249, 0.12) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  left: var(--mouse-x, 50%);
+  top: var(--mouse-y, 50%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 200ms ease;
+  z-index: 0;
+}
+
+.spotlight-hover:hover::before {
+  opacity: 1;
+}
+
+/* 11. Text reveal — word by word */
+.text-reveal {
+  overflow: hidden;
+}
+
+.text-reveal span {
+  display: inline-block;
+  animation: word-rise 500ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes word-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* 12. Gradient border animation */
+.animated-border {
+  position: relative;
+}
+
+.animated-border::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, #22d3ee, #6366f1, #14b8a6, #22d3ee);
+  background-size: 300% 300%;
+  animation: border-spin 4s linear infinite;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+
+.animated-border:hover::before {
+  opacity: 1;
+}
+
+@keyframes border-spin {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+html[data-performance="lite"] .animated-border::before {
+  animation: none;
+}
+
+/* 13. Elastic scale on click */
+.press-effect:active {
+  transform: scale(0.95);
+  transition: transform 100ms ease;
+}
+
+/* 14. Slide-in from left for section content */
+.slide-in-left {
+  animation: slide-left 450ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes slide-left {
+  from {
+    opacity: 0;
+    transform: translate3d(-24px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* 15. Number count-up highlight */
+.count-highlight {
+  display: inline-block;
+  animation: count-pop 600ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes count-pop {
+  from {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }

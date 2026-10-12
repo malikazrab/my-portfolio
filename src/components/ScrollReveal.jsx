@@ -2,17 +2,17 @@ import React, { memo, useEffect, useMemo, useRef, useState } from "react";
 import { shouldReduceMotion } from "../utils/performance";
 
 const offsets = {
-  up: "translate3d(0, 14px, 0)",
-  down: "translate3d(0, -14px, 0)",
-  left: "translate3d(14px, 0, 0)",
-  right: "translate3d(-14px, 0, 0)",
+  up:    "translate3d(0, 28px, 0)",
+  down:  "translate3d(0, -28px, 0)",
+  left:  "translate3d(28px, 0, 0)",
+  right: "translate3d(-28px, 0, 0)",
 };
 
 const mobileOffsets = {
-  up: "translate3d(0, 22px, 0)",
-  down: "translate3d(0, -22px, 0)",
-  left: "translate3d(0, 22px, 0)",
-  right: "translate3d(0, 22px, 0)",
+  up:    "translate3d(0, 32px, 0)",
+  down:  "translate3d(0, -32px, 0)",
+  left:  "translate3d(0, 32px, 0)",
+  right: "translate3d(0, 32px, 0)",
 };
 
 function ScrollReveal({
@@ -21,8 +21,9 @@ function ScrollReveal({
   className = "",
   direction = "up",
   delay = 0,
-  duration = 360,
+  duration = 440,
   threshold = 0.01,
+  blur = false,
   style,
   ...props
 }) {
@@ -30,7 +31,7 @@ function ScrollReveal({
   const reduceMotion = shouldReduceMotion();
   const mobileViewport = typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches;
   const revealOffsets = mobileViewport ? mobileOffsets : offsets;
-  const revealDuration = mobileViewport ? Math.max(duration, 480) : duration;
+  const revealDuration = mobileViewport ? Math.max(duration, 500) : duration;
   const [visible, setVisible] = useState(
     () => reduceMotion || typeof IntersectionObserver === "undefined"
   );
@@ -46,9 +47,7 @@ function ScrollReveal({
           observer.disconnect();
         }
       },
-      // Preload the short animation before it becomes visible; this prevents
-      // reveal work from landing in the active scroll frame.
-      { threshold, rootMargin: "0px 0px 180px 0px" }
+      { threshold, rootMargin: "0px 0px 200px 0px" }
     );
 
     observer.observe(element);
@@ -59,13 +58,20 @@ function ScrollReveal({
     () => ({
       opacity: visible ? 1 : 0,
       transform: visible ? "translate3d(0, 0, 0)" : revealOffsets[direction] || revealOffsets.up,
-      transition: reduceMotion ? "none" : `opacity ${revealDuration}ms cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms, transform ${revealDuration}ms cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms`,
-      // The browser promotes a layer only before the reveal and releases it
-      // immediately afterwards, avoiding a layer for every card on the page.
+      filter: blur && !visible ? "blur(6px)" : "none",
+      transition: reduceMotion
+        ? "none"
+        : [
+            `opacity ${revealDuration}ms cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms`,
+            `transform ${revealDuration}ms cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms`,
+            blur ? `filter ${revealDuration}ms cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms` : "",
+          ]
+            .filter(Boolean)
+            .join(", "),
       willChange: visible ? "auto" : "opacity, transform",
       ...style,
     }),
-    [delay, direction, reduceMotion, revealDuration, revealOffsets, style, visible]
+    [blur, delay, direction, reduceMotion, revealDuration, revealOffsets, style, visible]
   );
 
   return (

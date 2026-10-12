@@ -33,7 +33,7 @@ function ProjectCard({ project, index }) {
         className="h-full will-change-transform"
       >
         <InteractivePanel
-          className="group relative glass-card spotlight-card rounded-2xl overflow-hidden project-card motion-sheen motion-border h-full mobile-motion-soft"
+          className="group relative glass-card spotlight-card spotlight-hover rounded-2xl overflow-hidden project-card motion-sheen animated-border h-full mobile-motion-soft"
           innerClassName="relative z-10"
         >
           <div className="h-1.5 w-full brand-gradient" />
