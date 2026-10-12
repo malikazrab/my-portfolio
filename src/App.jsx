@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from "react-route
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import PortfolioLoader from "./components/PortfolioLoader";
+import ScrollProgressBar from "./components/ScrollProgressBar";
 import { shouldUseLiteMode, shouldReduceMotion } from "./utils/performance";
 import "./index.css";
 
@@ -56,17 +57,25 @@ function ScrollToTop() {
 
 function AppRoutes() {
   const location = useLocation();
+  const reduceMotion = shouldReduceMotion();
 
+  // Key-based remount gives each page its own fade-in via CSS class.
+  // We use the pathname so hash/search changes don't retrigger.
   return (
-    <Routes location={location}>
-      <Route path="/" element={<Home />} />
-      <Route path="/about" element={<About />} />
-      <Route path="/projects" element={<Projects />} />
-      <Route path="/skills" element={<Skills />} />
-      <Route path="/experience" element={<Experience />} />
-      <Route path="/contact" element={<Contact />} />
-      <Route path="/admin/downloads" element={<AdminDownloads />} />
-    </Routes>
+    <div
+      key={location.pathname}
+      className={reduceMotion ? undefined : "page-fade-in"}
+    >
+      <Routes location={location}>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/projects" element={<Projects />} />
+        <Route path="/skills" element={<Skills />} />
+        <Route path="/experience" element={<Experience />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/admin/downloads" element={<AdminDownloads />} />
+      </Routes>
+    </div>
   );
 }
 
@@ -99,6 +108,7 @@ export default function App() {
     <ThemeContext.Provider value={themeValue}>
       <Router>
         <ScrollToTop />
+        <ScrollProgressBar />
         <div className={`relative z-10 min-h-screen transition-colors duration-200 ease-out ${dark ? "text-slate-100" : "text-slate-900"}`}>
           <Navbar />
           <Suspense fallback={<div className="min-h-screen flex items-center justify-center" />}>

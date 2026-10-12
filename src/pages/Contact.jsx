@@ -48,9 +48,20 @@ export default function Contact() {
     event.preventDefault();
     if (!validate()) return;
     setStatus("loading");
-    await new Promise((resolve) => setTimeout(resolve, 900));
-    setStatus("success");
-    setForm({ name: "", email: "", subject: "", message: "" });
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to send");
+      setStatus("success");
+      setForm({ name: "", email: "", subject: "", message: "" });
+    } catch (err) {
+      setErrors({ submit: err.message || "Something went wrong. Please try again." });
+      setStatus("idle");
+    }
   };
 
   const inputBase = "w-full px-4 py-3 rounded-2xl text-sm border bg-white/5 text-slate-900 dark:text-slate-100 placeholder:text-slate-500 focus:outline-none focus:ring-2 transition-colors";
@@ -183,6 +194,10 @@ export default function Contact() {
                       </>
                     )}
                   </button>
+
+                  {errors.submit && (
+                    <p className="text-xs text-center text-red-500 font-mono">{errors.submit}</p>
+                  )}
 
                   <p className="text-xs text-center text-slate-500 dark:text-slate-400 font-mono">
                     Or email me directly at{" "}

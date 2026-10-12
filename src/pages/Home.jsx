@@ -7,6 +7,9 @@ import InteractivePanel from "../components/InteractivePanel";
 import ScrollReveal from "../components/ScrollReveal";
 import ProfileLightbox from "../components/ProfileLightbox";
 import ResumeDownloadSection from "../components/ResumeDownloadSection";
+import { useTypewriter } from "../hooks/useTypewriter";
+import { useCountUp } from "../hooks/useCountUp";
+import { useMagneticHover } from "../hooks/useMagneticHover";
 
 const heroSkillItems = [
   { label: "Laravel / PHP", pct: 95 },
@@ -16,10 +19,10 @@ const heroSkillItems = [
 ];
 
 const homeStats = [
-  { target: "3", label: "Featured Projects" },
-  { target: "4", label: "Experience Entries" },
-  { target: "2", label: "Academic Levels" },
-  { target: "3", label: "Certifications" },
+  { target: 3, label: "Featured Projects" },
+  { target: 4, label: "Experience Entries" },
+  { target: 2, label: "Academic Levels" },
+  { target: 3, label: "Certifications" },
 ];
 
 const homeServices = [
@@ -43,10 +46,22 @@ const homeServices = [
   },
 ];
 
-function StatTile({ value, label }) {
+// Role phrases cycled by the typewriter
+const rolePhrases = [
+  "PHP / Laravel Developer",
+  "Full-Stack Web Developer",
+  "MySQL Database Designer",
+  "REST API Engineer",
+];
+
+// Animated stat tile — counts up from 0 when it enters the viewport
+function AnimatedStatTile({ target, label }) {
+  const { ref, value } = useCountUp(target, 900);
   return (
-    <div className="text-center">
-      <div className="font-display font-semibold text-2xl sm:text-3xl text-gradient mb-1">{value}</div>
+    <div className="text-center" ref={ref}>
+      <div className="font-display font-semibold text-2xl sm:text-3xl text-gradient mb-1">
+        {value}+
+      </div>
       <div className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">{label}</div>
     </div>
   );
@@ -55,6 +70,13 @@ function StatTile({ value, label }) {
 export default function Home() {
   const featured = projects.filter((project) => project.featured);
   const [photoOpen, setPhotoOpen] = useState(false);
+
+  // Typewriter cycling through roles
+  const role = useTypewriter(rolePhrases, 55, 32, 2000);
+
+  // Magnetic hover for CTA buttons
+  const primaryMag = useMagneticHover(7);
+  const ghostMag = useMagneticHover(7);
 
   return (
     <main className="page-shell">
@@ -66,6 +88,8 @@ export default function Home() {
           <span className="hero-orb float-fast left-[52%] bottom-[10%] h-20 w-20 sm:h-28 sm:w-28 opacity-70" />
           <span className="hero-ribbon top-[22%] sm:top-[18%]" />
           <span className="hero-ribbon bottom-[14%] sm:bottom-[16%] opacity-40" />
+          {/* Re-enabled grid drift scoped only to hero */}
+          <span className="hero-grid-drift" aria-hidden="true" />
         </div>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-20 w-full relative z-10">
           <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-8 sm:gap-10 lg:gap-16 items-start sm:items-center">
@@ -79,13 +103,15 @@ export default function Home() {
 
               <ScrollReveal direction="up" delay={40}>
                 <h1 className="font-display font-semibold text-3xl sm:text-5xl lg:text-6xl leading-[1.06] sm:leading-[1.05] text-slate-900 dark:text-white mb-4 sm:mb-5">
-                  Hi, I’m <span className="text-gradient">Hafiz Azrab</span>
+                  Hi, I&apos;m <span className="text-gradient">Hafiz Azrab</span>
                 </h1>
               </ScrollReveal>
 
-              <ScrollReveal direction="up" delay={80}>
-                <p className="font-display font-medium text-lg sm:text-2xl text-slate-600 dark:text-slate-400 mb-3 sm:mb-4 max-w-xl">
-                  {personal.tagline}
+              {/* Typewriter role line */}
+              <ScrollReveal direction="up" delay={70}>
+                <p className="font-display font-medium text-lg sm:text-2xl text-slate-600 dark:text-slate-400 mb-3 sm:mb-4 max-w-xl min-h-[2em]">
+                  <span className="typewriter-text">{role}</span>
+                  <span className="typewriter-cursor" aria-hidden="true">|</span>
                 </p>
               </ScrollReveal>
 
@@ -95,34 +121,50 @@ export default function Home() {
                 </p>
               </ScrollReveal>
 
-              <div className="hero-cta-row flex flex-col sm:flex-row gap-3 mb-6 sm:mb-8">
-                <Link to="/contact" className="btn-primary w-full sm:w-auto justify-center">
-                  Let&apos;s work together
-                  <ArrowRight size={15} />
-                </Link>
-                <Link to="/projects" className="btn-ghost w-full sm:w-auto justify-center">
-                  View my work
-                </Link>
-              </div>
+              <ScrollReveal direction="up" delay={140}>
+                <div className="hero-cta-row flex flex-col sm:flex-row gap-3 mb-6 sm:mb-8">
+                  <Link
+                    to="/contact"
+                    className="btn-primary w-full sm:w-auto justify-center"
+                    ref={primaryMag.ref}
+                    onMouseMove={primaryMag.onMouseMove}
+                    onMouseLeave={primaryMag.onMouseLeave}
+                  >
+                    Let&apos;s work together
+                    <ArrowRight size={15} />
+                  </Link>
+                  <Link
+                    to="/projects"
+                    className="btn-ghost w-full sm:w-auto justify-center"
+                    ref={ghostMag.ref}
+                    onMouseMove={ghostMag.onMouseMove}
+                    onMouseLeave={ghostMag.onMouseLeave}
+                  >
+                    View my work
+                  </Link>
+                </div>
+              </ScrollReveal>
 
-              <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
-                <a href={personal.githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 hover:text-cyan-400 transition-colors">
-                  <Github size={15} />
-                  {personal.githubDisplay}
-                </a>
-                <a href={personal.linkedinUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 hover:text-cyan-400 transition-colors">
-                  <Linkedin size={15} />
-                  {personal.linkedinDisplay}
-                </a>
-                <a href={personal.emailHref} className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 hover:text-cyan-400 transition-colors">
-                  <Mail size={15} />
-                  {personal.email}
-                </a>
-                <a href={personal.phoneHref} className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 hover:text-cyan-400 transition-colors">
-                  <Phone size={15} />
-                  {personal.phone}
-                </a>
-              </div>
+              <ScrollReveal direction="up" delay={170}>
+                <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
+                  <a href={personal.githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 hover:text-cyan-400 transition-colors">
+                    <Github size={15} />
+                    {personal.githubDisplay}
+                  </a>
+                  <a href={personal.linkedinUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 hover:text-cyan-400 transition-colors">
+                    <Linkedin size={15} />
+                    {personal.linkedinDisplay}
+                  </a>
+                  <a href={personal.emailHref} className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 hover:text-cyan-400 transition-colors">
+                    <Mail size={15} />
+                    {personal.email}
+                  </a>
+                  <a href={personal.phoneHref} className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400 hover:text-cyan-400 transition-colors">
+                    <Phone size={15} />
+                    {personal.phone}
+                  </a>
+                </div>
+              </ScrollReveal>
             </div>
 
             <ScrollReveal direction="up" delay={120} className="mt-2 sm:mt-0">
@@ -144,7 +186,7 @@ export default function Home() {
                       alt={personal.photoAlt}
                       className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                       loading="eager"
-                      fetchPriority="high"
+                      fetchpriority="high"
                       decoding="async"
                     />
                     <span className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent opacity-60" />
@@ -168,7 +210,7 @@ export default function Home() {
                 <div className="grid grid-cols-2 gap-3 sm:gap-4">
                   {homeStats.map((stat) => (
                     <div key={stat.label} className="rounded-2xl bg-white/5 border border-white/10 px-3 py-4 sm:px-4 motion-sheen">
-                      <StatTile value={stat.value || stat.target} label={stat.label} />
+                      <AnimatedStatTile target={stat.target} label={stat.label} />
                     </div>
                   ))}
                 </div>
@@ -178,12 +220,13 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Stats bar — also uses animated count-up */}
       <section className="py-12 border-y border-white/10 bg-white/5">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-8">
             {homeStats.map((stat, index) => (
               <ScrollReveal key={stat.label} direction="up" delay={index * 80} duration={520}>
-                <StatTile value={stat.target} label={stat.label} />
+                <AnimatedStatTile target={stat.target} label={stat.label} />
               </ScrollReveal>
             ))}
           </div>
@@ -201,7 +244,7 @@ export default function Home() {
           <ScrollReveal direction="up" className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 sm:mb-10">
             <div>
               <span className="section-tag mb-4 inline-flex">Featured Work</span>
-              <h2 className="font-display font-semibold text-2xl sm:text-4xl text-slate-900 dark:text-white">Projects I’m proud of</h2>
+              <h2 className="font-display font-semibold text-2xl sm:text-4xl text-slate-900 dark:text-white">Projects I&apos;m proud of</h2>
             </div>
             <Link to="/projects" className="btn-ghost self-start">
               All projects <ArrowRight size={14} />
@@ -220,7 +263,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto">
           <ScrollReveal direction="up" className="text-center mb-8 sm:mb-10">
             <span className="section-tag mb-4 inline-flex">What I do</span>
-            <h2 className="font-display font-semibold text-2xl sm:text-4xl text-slate-900 dark:text-white">Services & Expertise</h2>
+            <h2 className="font-display font-semibold text-2xl sm:text-4xl text-slate-900 dark:text-white">Services &amp; Expertise</h2>
           </ScrollReveal>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -251,7 +294,7 @@ export default function Home() {
             <div className="relative z-10">
               <h2 className="font-display font-semibold text-2xl sm:text-4xl text-white mb-4">Got a project in mind?</h2>
               <p className="text-white/80 text-sm sm:text-lg mb-7 sm:mb-8 max-w-lg mx-auto">
-                I’m available for freelance work and full-time opportunities. Let’s build something that performs well and ships cleanly.
+                I&apos;m available for freelance work and full-time opportunities. Let&apos;s build something that performs well and ships cleanly.
               </p>
               <Link to="/contact" className="inline-flex items-center gap-2 px-8 py-4 bg-slate-950 text-cyan-100 rounded-xl font-display font-semibold text-sm hover:bg-slate-900 transition-colors motion-sheen">
                 Start a conversation
@@ -261,6 +304,7 @@ export default function Home() {
           </ScrollReveal>
         </div>
       </section>
+
       <ProfileLightbox
         open={photoOpen}
         onClose={() => setPhotoOpen(false)}

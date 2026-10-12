@@ -18,7 +18,7 @@ module.exports = async function handler(req, res) {
     return send(res, 400, { error: "Name is required." });
   }
 
-  if (!cleanedEmail || !cleanedEmail.includes("@")) {
+  if (!cleanedEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanedEmail)) {
     return send(res, 400, { error: "A valid email is required." });
   }
 

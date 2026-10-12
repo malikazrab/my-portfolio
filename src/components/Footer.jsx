@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 import { Link } from "react-router-dom";
-import { Github, Heart, Linkedin, Mail, Phone } from "lucide-react";
+import { Github, Linkedin, Mail, Phone } from "lucide-react";
 import { personal } from "../data/portfolio";
 
 function Footer() {
@@ -76,9 +76,6 @@ function Footer() {
         <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-xs text-slate-500 dark:text-slate-400 font-mono">
             © {year} {personal.name}. All rights reserved.
-          </p>
-          <p className="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1">
-            Built with <Heart size={10} className="text-cyan-300" /> React & Tailwind
           </p>
         </div>
       </div>
