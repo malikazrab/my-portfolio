@@ -7,9 +7,11 @@ import InteractivePanel from "../components/InteractivePanel";
 import ScrollReveal from "../components/ScrollReveal";
 import ProfileLightbox from "../components/ProfileLightbox";
 import ResumeDownloadSection from "../components/ResumeDownloadSection";
+import MobileAnimationWrapper from "../components/MobileAnimationWrapper";
 import { useTypewriter } from "../hooks/useTypewriter";
 import { useCountUp } from "../hooks/useCountUp";
 import { useMagneticHover } from "../hooks/useMagneticHover";
+import { useMobileParallax } from "../hooks/useMobileParallax";
 
 const heroSkillItems = [
   { label: "Laravel / PHP", pct: 95 },
@@ -78,6 +80,10 @@ export default function Home() {
   const primaryMag = useMagneticHover(7);
   const ghostMag = useMagneticHover(7);
 
+  // Mobile parallax effects
+  const heroParallax = useMobileParallax(0.2);
+  const statsParallax = useMobileParallax(0.15);
+
   return (
     <main className="page-shell">
       <section className="hero-stage relative min-h-[calc(100svh-4rem)] flex items-start sm:items-center pt-24 sm:pt-20 pb-10 sm:pb-0 noise-bg">
@@ -110,7 +116,7 @@ export default function Home() {
               {/* Typewriter role line */}
               <ScrollReveal direction="up" delay={70}>
                 <p className="font-display font-medium text-lg sm:text-2xl text-slate-600 dark:text-slate-400 mb-3 sm:mb-4 max-w-xl min-h-[2em]">
-                  <span className="typewriter-text">{role}</span>
+                  <span className="typewriter-text mobile-neon-pulse">{role}</span>
                   <span className="typewriter-cursor" aria-hidden="true">|</span>
                 </p>
               </ScrollReveal>
@@ -125,7 +131,7 @@ export default function Home() {
                 <div className="hero-cta-row flex flex-col sm:flex-row gap-3 mb-6 sm:mb-8">
                   <Link
                     to="/contact"
-                    className="btn-primary w-full sm:w-auto justify-center"
+                    className="btn-primary w-full sm:w-auto justify-center mobile-magnetic mobile-squeeze"
                     ref={primaryMag.ref}
                     onMouseMove={primaryMag.onMouseMove}
                     onMouseLeave={primaryMag.onMouseLeave}
@@ -135,7 +141,7 @@ export default function Home() {
                   </Link>
                   <Link
                     to="/projects"
-                    className="btn-ghost w-full sm:w-auto justify-center"
+                    className="btn-ghost w-full sm:w-auto justify-center mobile-magnetic mobile-squeeze"
                     ref={ghostMag.ref}
                     onMouseMove={ghostMag.onMouseMove}
                     onMouseLeave={ghostMag.onMouseLeave}
@@ -168,7 +174,8 @@ export default function Home() {
             </div>
 
             <ScrollReveal direction="up" delay={120} className="mt-2 sm:mt-0">
-              <InteractivePanel className="glass-card spotlight-card hero-panel rounded-[1.75rem] p-5 sm:p-8 hero-float motion-sheen mobile-motion-soft" innerClassName="relative z-10">
+              <div ref={heroParallax.ref} style={{ transform: `translateY(${heroParallax.offset * 0.1}px)` }}>
+                <InteractivePanel className="glass-card spotlight-card hero-panel rounded-[1.75rem] p-5 sm:p-8 hero-float motion-sheen mobile-motion-soft mobile-wave" innerClassName="relative z-10">
                 <div className="flex flex-col sm:flex-row items-center sm:items-start justify-between gap-4 mb-6 text-center sm:text-left">
                   <div className="order-2 sm:order-1">
                     <p className="text-xs font-mono text-cyan-200/80">Profile</p>
@@ -207,27 +214,30 @@ export default function Home() {
                   ))}
                 </div>
 
-                <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                <div className="grid grid-cols-2 gap-3 sm:gap-4 mobile-stagger-grid">
                   {homeStats.map((stat) => (
-                    <div key={stat.label} className="rounded-2xl bg-white/5 border border-white/10 px-3 py-4 sm:px-4 motion-sheen">
+                    <div key={stat.label} className="rounded-2xl bg-white/5 border border-white/10 px-3 py-4 sm:px-4 motion-sheen mobile-bounce-in">
                       <AnimatedStatTile target={stat.target} label={stat.label} />
                     </div>
                   ))}
                 </div>
               </InteractivePanel>
+              </div>
             </ScrollReveal>
           </div>
         </div>
       </section>
 
-      {/* Stats bar — also uses animated count-up */}
-      <section className="py-12 border-y border-white/10 bg-white/5">
+      {/* Stats bar — also uses animated count-up with mobile animations */}
+      <section className="py-12 border-y border-white/10 bg-white/5" ref={statsParallax.ref}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-8">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-8 mobile-stagger-grid">
             {homeStats.map((stat, index) => (
-              <ScrollReveal key={stat.label} direction="up" delay={index * 80} duration={520}>
-                <AnimatedStatTile target={stat.target} label={stat.label} />
-              </ScrollReveal>
+              <MobileAnimationWrapper key={stat.label} animation="zoom" delay={index * 80}>
+                <div className="mobile-scale-pulse">
+                  <AnimatedStatTile target={stat.target} label={stat.label} />
+                </div>
+              </MobileAnimationWrapper>
             ))}
           </div>
         </div>
@@ -251,9 +261,11 @@ export default function Home() {
             </Link>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mobile-stagger-grid">
             {featured.map((project, index) => (
-              <ProjectCard key={project.id} project={project} index={index} />
+              <MobileAnimationWrapper key={project.id} animation="bounce" delay={index * 100}>
+                <ProjectCard project={project} index={index} />
+              </MobileAnimationWrapper>
             ))}
           </div>
         </div>
@@ -266,22 +278,24 @@ export default function Home() {
             <h2 className="font-display font-semibold text-2xl sm:text-4xl text-slate-900 dark:text-white">Services &amp; Expertise</h2>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mobile-stagger-grid">
             {homeServices.map((service, index) => (
-              <ScrollReveal key={service.title} direction="up" delay={index * 90}>
-                <InteractivePanel className="glass-card spotlight-card rounded-2xl p-6 h-full motion-sheen" innerClassName="relative z-10">
-                  <div className="w-11 h-11 rounded-xl bg-white/10 border border-white/10 flex items-center justify-center text-cyan-300 mb-5">
-                    {service.icon}
-                  </div>
-                  <h3 className="font-display font-semibold text-lg text-slate-900 dark:text-white mb-2">{service.title}</h3>
-                  <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-4">{service.desc}</p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {service.tags.map((tag) => (
-                      <span key={tag} className="skill-pill">{tag}</span>
-                    ))}
-                  </div>
-                </InteractivePanel>
-              </ScrollReveal>
+              <MobileAnimationWrapper key={service.title} animation="slide-reveal" delay={index * 90}>
+                <ScrollReveal direction="up" delay={index * 90}>
+                  <InteractivePanel className="glass-card spotlight-card rounded-2xl p-6 h-full motion-sheen mobile-wave" innerClassName="relative z-10">
+                    <div className="w-11 h-11 rounded-xl bg-white/10 border border-white/10 flex items-center justify-center text-cyan-300 mb-5 mobile-neon-pulse">
+                      {service.icon}
+                    </div>
+                    <h3 className="font-display font-semibold text-lg text-slate-900 dark:text-white mb-2">{service.title}</h3>
+                    <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-4 break-words">{service.desc}</p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {service.tags.map((tag) => (
+                        <span key={tag} className="skill-pill mobile-bounce-in">{tag}</span>
+                      ))}
+                    </div>
+                  </InteractivePanel>
+                </ScrollReveal>
+              </MobileAnimationWrapper>
             ))}
           </div>
         </div>
@@ -289,19 +303,21 @@ export default function Home() {
 
       <section className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
-          <ScrollReveal direction="up" className="relative overflow-hidden rounded-[1.75rem] brand-gradient p-8 sm:p-12 text-center shadow-2xl shadow-cyan-500/20 motion-sheen">
-            <div className="absolute inset-0 grid-pattern opacity-20" />
-            <div className="relative z-10">
-              <h2 className="font-display font-semibold text-2xl sm:text-4xl text-white mb-4">Got a project in mind?</h2>
-              <p className="text-white/80 text-sm sm:text-lg mb-7 sm:mb-8 max-w-lg mx-auto">
-                I&apos;m available for freelance work and full-time opportunities. Let&apos;s build something that performs well and ships cleanly.
-              </p>
-              <Link to="/contact" className="inline-flex items-center gap-2 px-8 py-4 bg-slate-950 text-cyan-100 rounded-xl font-display font-semibold text-sm hover:bg-slate-900 transition-colors motion-sheen">
-                Start a conversation
-                <ArrowRight size={16} />
-              </Link>
-            </div>
-          </ScrollReveal>
+          <MobileAnimationWrapper animation="zoom" delay={100}>
+            <ScrollReveal direction="up" className="relative overflow-hidden rounded-[1.75rem] brand-gradient p-8 sm:p-12 text-center shadow-2xl shadow-cyan-500/20 motion-sheen mobile-scale-pulse">
+              <div className="absolute inset-0 grid-pattern opacity-20" />
+              <div className="relative z-10">
+                <h2 className="font-display font-semibold text-2xl sm:text-4xl text-white mb-4 mobile-blur-reveal">Got a project in mind?</h2>
+                <p className="text-white/80 text-sm sm:text-lg mb-7 sm:mb-8 max-w-lg mx-auto break-words">
+                  I&apos;m available for freelance work and full-time opportunities. Let&apos;s build something that performs well and ships cleanly.
+                </p>
+                <Link to="/contact" className="inline-flex items-center gap-2 px-8 py-4 bg-slate-950 text-cyan-100 rounded-xl font-display font-semibold text-sm hover:bg-slate-900 transition-colors motion-sheen mobile-magnetic mobile-squeeze">
+                  Start a conversation
+                  <ArrowRight size={16} />
+                </Link>
+              </div>
+            </ScrollReveal>
+          </MobileAnimationWrapper>
         </div>
       </section>
 

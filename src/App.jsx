@@ -106,7 +106,7 @@ export default function App() {
 
   return (
     <ThemeContext.Provider value={themeValue}>
-      <Router>
+      <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <ScrollToTop />
         <ScrollProgressBar />
         <div className={`relative z-10 min-h-screen transition-colors duration-200 ease-out ${dark ? "text-slate-100" : "text-slate-900"}`}>

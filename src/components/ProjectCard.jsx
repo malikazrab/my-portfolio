@@ -77,7 +77,7 @@ function ProjectCard({ project, index }) {
                 <ArrowUpRight size={16} />
               </div>
             </div>
-            <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-5 line-clamp-3">
+            <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-5 line-clamp-3 break-words">
               {project.description}
             </p>
 

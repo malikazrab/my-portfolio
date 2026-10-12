@@ -21,6 +21,9 @@
     scroll-behavior: smooth;
     scroll-padding-top: 5rem;
     background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-dark-2) 100%);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   body {
@@ -1300,5 +1303,384 @@ html[data-performance="lite"] .animated-border::before {
   to {
     transform: scale(1);
     opacity: 1;
+  }
+}
+
+/* ==========================================================================
+   CRAZY MOBILE ANIMATIONS - Advanced Motion System
+   ========================================================================== */
+
+/* 16. Touch Ripple Effect - GPU Accelerated */
+.touch-ripple-effect {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(103, 232, 249, 0.6) 0%, rgba(103, 232, 249, 0) 70%);
+  transform: translate(-50%, -50%) scale(0) translateZ(0);
+  animation: ripple-expand 600ms cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  z-index: 100;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+@keyframes ripple-expand {
+  0% {
+    transform: translate(-50%, -50%) scale(0) translateZ(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(20) translateZ(0);
+    opacity: 0;
+  }
+}
+
+.mobile-parallax-slow {
+  transition: transform 0.1s ease-out;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+.mobile-parallax-fast {
+  transition: transform 0.05s ease-out;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* 18. Magnetic Pull on Touch - GPU Optimized */
+.mobile-magnetic {
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+.mobile-magnetic:active {
+  transform: scale(1.05) translateZ(0);
+}
+
+/* 19. Bounce Entrance for Mobile Cards */
+@media (max-width: 767px) {
+  .mobile-bounce-in {
+    animation: mobile-bounce 800ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+
+  .mobile-bounce-in:nth-child(1) { animation-delay: 100ms; }
+  .mobile-bounce-in:nth-child(2) { animation-delay: 200ms; }
+  .mobile-bounce-in:nth-child(3) { animation-delay: 300ms; }
+  .mobile-bounce-in:nth-child(4) { animation-delay: 400ms; }
+}
+
+@keyframes mobile-bounce {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 60px, 0) scale(0.8);
+  }
+  50% {
+    transform: translate3d(0, -8px, 0) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+/* 20. Mobile Shake Attention */
+.mobile-shake {
+  animation: mobile-shake 600ms cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes mobile-shake {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  10%, 30%, 50%, 70%, 90% { transform: translate3d(-4px, 0, 0); }
+  20%, 40%, 60%, 80% { transform: translate3d(4px, 0, 0); }
+}
+
+/* 21. Mobile Tilt on Scroll */
+.mobile-tilt-scroll {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* 22. Liquid Morph Animation */
+.mobile-liquid-morph {
+  animation: liquid-morph 3s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@keyframes liquid-morph {
+  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  25% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+  50% { border-radius: 50% 50% 20% 80% / 25% 75% 75% 25%; }
+  75% { border-radius: 80% 20% 50% 50% / 75% 25% 25% 75%; }
+}
+
+/* 23. Mobile Glitch Effect */
+.mobile-glitch {
+  position: relative;
+}
+
+.mobile-glitch::before,
+.mobile-glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+
+.mobile-glitch:active::before {
+  animation: glitch-1 300ms 1;
+  color: #22d3ee;
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+}
+
+.mobile-glitch:active::after {
+  animation: glitch-2 300ms 1;
+  color: #6366f1;
+  clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+}
+
+@keyframes glitch-1 {
+  0%, 100% { transform: translate(0); opacity: 0; }
+  20%, 80% { transform: translate(-3px, 2px); opacity: 0.8; }
+}
+
+@keyframes glitch-2 {
+  0%, 100% { transform: translate(0); opacity: 0; }
+  20%, 80% { transform: translate(3px, -2px); opacity: 0.8; }
+}
+
+/* 24. Mobile Particle Burst on Tap */
+.mobile-particle-burst {
+  position: relative;
+  overflow: visible;
+}
+
+/* 25. Elastic Squeeze */
+.mobile-squeeze {
+  transition: transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.mobile-squeeze:active {
+  transform: scale(0.92) rotate(-1deg);
+}
+
+/* 26. Mobile Slide Reveal */
+@media (max-width: 767px) {
+  .mobile-slide-reveal {
+    animation: mobile-slide-reveal 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .mobile-slide-reveal:nth-child(odd) {
+    animation-name: mobile-slide-reveal-left;
+  }
+
+  .mobile-slide-reveal:nth-child(even) {
+    animation-name: mobile-slide-reveal-right;
+  }
+}
+
+@keyframes mobile-slide-reveal-left {
+  from {
+    opacity: 0;
+    transform: translate3d(-100px, 20px, 0) rotate(-5deg);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+}
+
+@keyframes mobile-slide-reveal-right {
+  from {
+    opacity: 0;
+    transform: translate3d(100px, 20px, 0) rotate(5deg);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+}
+
+/* 27. Mobile Scale Pulse on Scroll */
+.mobile-scale-pulse {
+  animation: mobile-scale-pulse 2s ease-in-out infinite;
+}
+
+@keyframes mobile-scale-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+}
+
+/* 28. Mobile Rotate Entrance */
+@media (max-width: 767px) {
+  .mobile-rotate-in {
+    animation: mobile-rotate-in 900ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+}
+
+@keyframes mobile-rotate-in {
+  from {
+    opacity: 0;
+    transform: rotate(-180deg) scale(0.3);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(0) scale(1);
+  }
+}
+
+/* 29. Mobile Flip Card */
+.mobile-flip {
+  transform-style: preserve-3d;
+  transition: transform 600ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.mobile-flip.flipped {
+  transform: rotateY(180deg);
+}
+
+/* 30. Mobile Gooey Effect */
+.mobile-gooey {
+  filter: url(#gooey-filter);
+  animation: mobile-gooey-float 4s ease-in-out infinite;
+}
+
+@keyframes mobile-gooey-float {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(5px, -10px); }
+  66% { transform: translate(-5px, 5px); }
+}
+
+/* 31. Mobile Neon Glow Pulse */
+.mobile-neon-pulse {
+  animation: mobile-neon-pulse 2s ease-in-out infinite;
+}
+
+@keyframes mobile-neon-pulse {
+  0%, 100% {
+    text-shadow:
+      0 0 10px rgba(34, 211, 238, 0.5),
+      0 0 20px rgba(34, 211, 238, 0.3),
+      0 0 30px rgba(34, 211, 238, 0.2);
+  }
+  50% {
+    text-shadow:
+      0 0 20px rgba(34, 211, 238, 0.8),
+      0 0 30px rgba(34, 211, 238, 0.6),
+      0 0 40px rgba(34, 211, 238, 0.4),
+      0 0 50px rgba(34, 211, 238, 0.2);
+  }
+}
+
+/* 32. Mobile Wave Motion */
+.mobile-wave {
+  animation: mobile-wave 3s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@keyframes mobile-wave {
+  0%, 100% { transform: translateY(0) scale(1); }
+  25% { transform: translateY(-12px) scale(1.02); }
+  50% { transform: translateY(0) scale(1); }
+  75% { transform: translateY(-6px) scale(0.98); }
+}
+
+/* 33. Mobile Zoom Entrance */
+@media (max-width: 767px) {
+  .mobile-zoom-in {
+    animation: mobile-zoom-in 700ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+}
+
+@keyframes mobile-zoom-in {
+  from {
+    opacity: 0;
+    transform: scale(0.4) translate3d(0, 50px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+}
+
+/* 34. Mobile Swing Entrance */
+@media (max-width: 767px) {
+  .mobile-swing-in {
+    transform-origin: top center;
+    animation: mobile-swing-in 1000ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+}
+
+@keyframes mobile-swing-in {
+  0% {
+    opacity: 0;
+    transform: rotate(-15deg) scale(0.8);
+  }
+  40% {
+    transform: rotate(10deg) scale(1.1);
+  }
+  80% {
+    transform: rotate(-5deg) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(0) scale(1);
+  }
+}
+
+/* 35. Mobile Blur Reveal */
+@media (max-width: 767px) {
+  .mobile-blur-reveal {
+    animation: mobile-blur-reveal 800ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+}
+
+@keyframes mobile-blur-reveal {
+  from {
+    opacity: 0;
+    filter: blur(20px);
+    transform: translate3d(0, 30px, 0);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* 36. Mobile Stagger Grid */
+@media (max-width: 767px) {
+  .mobile-stagger-grid > * {
+    animation: mobile-grid-item 600ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .mobile-stagger-grid > *:nth-child(1) { animation-delay: 50ms; }
+  .mobile-stagger-grid > *:nth-child(2) { animation-delay: 100ms; }
+  .mobile-stagger-grid > *:nth-child(3) { animation-delay: 150ms; }
+  .mobile-stagger-grid > *:nth-child(4) { animation-delay: 200ms; }
+  .mobile-stagger-grid > *:nth-child(5) { animation-delay: 250ms; }
+  .mobile-stagger-grid > *:nth-child(6) { animation-delay: 300ms; }
+  .mobile-stagger-grid > *:nth-child(7) { animation-delay: 350ms; }
+  .mobile-stagger-grid > *:nth-child(8) { animation-delay: 400ms; }
+}
+
+@keyframes mobile-grid-item {
+  from {
+    opacity: 0;
+    transform: scale(0.6) translate3d(0, 40px, 0);
+  }
+  60% {
+    transform: scale(1.05) translate3d(0, -5px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translate3d(0, 0, 0);
   }
 }

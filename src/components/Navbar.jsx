@@ -96,9 +96,9 @@ function Navbar() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,border-color,box-shadow,transform] duration-300 ease-out ${scrolled ? "nav-shell shadow-2xl shadow-black/20" : "bg-transparent"} ${routePulse ? "nav-route-switch" : ""} ${hidden && !open ? "-translate-y-full" : "translate-y-0"}`}
+        className={`fixed top-0 left-0 right-0 z-50 w-full overflow-hidden transition-[background-color,border-color,box-shadow,transform] duration-300 ease-out ${scrolled ? "nav-shell shadow-2xl shadow-black/20" : "bg-transparent"} ${routePulse ? "nav-route-switch" : ""} ${hidden && !open ? "-translate-y-full" : "translate-y-0"}`}
       >
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="flex items-center justify-between h-16 sm:h-[4.5rem]">
             <Link to="/" className="flex items-center gap-2 group">
               <div className="w-9 h-9 rounded-xl shadow-lg shadow-cyan-500/20 pulse-soft overflow-hidden border border-cyan-200/40 bg-slate-800">
